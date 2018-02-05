@@ -11,8 +11,12 @@ export default class Cans extends Component {
 
   state = {
     search: '',
-    currentGroupId: this.props.group,
   };
+  
+  constructor(props){
+    super();
+    this.currentGroupId = props.group;
+  }
 
   getTags = (item) => {
     let tags = '';
@@ -36,7 +40,7 @@ export default class Cans extends Component {
 
   addCanAndRefresh = (response) => {
     if (response.data.text) {
-      this.props.reload(this.state.currentGroupId);
+      this.props.reload(this.currentGroupId);
     }
   };
 
@@ -57,7 +61,7 @@ export default class Cans extends Component {
 
   deleteCanAndRefresh = (response) => {
     if (response.data.result === 'Canned response removed successfully') {
-      this.props.reload(this.state.currentGroupId);
+      this.props.reload(this.currentGroupId);
     }
   };
 
@@ -78,13 +82,13 @@ export default class Cans extends Component {
     const listOfItems = [];
     window.LiveChat_cans.forEach((item) => {
       if (this.state.search === '' || this.getTags(item).includes(this.state.search)) {
-        if (this.state.currentGroupId === 0) {
+        if (this.currentGroupId === 0) {
           listOfItems.push(<CanListItem
             delete={this.showDeleteCanDialog}
             key={Math.random()}
             item={item}
           />);
-        } else if (item.group === this.state.currentGroupId) {
+        } else if (item.group === this.currentGroupId) {
           listOfItems.push(<CanListItem
             delete={this.showDeleteCanDialog}
             key={Math.random()}
@@ -97,8 +101,8 @@ export default class Cans extends Component {
   };
 
   changeGroup = (groupName) => {
-    this.state.currentGroupId = this.getGroupId(groupName);
-    this.props.reload(this.state.currentGroupId);
+    this.currentGroupId = this.getGroupId(groupName);
+    this.props.reload(this.currentGroupId);
   };
 
   openChangeGroupDialog = groupName => () => {
@@ -112,7 +116,7 @@ export default class Cans extends Component {
 
   getGroupName = () => {
     if (window.LiveChat_groups.length < 2) return null;
-    const found =  window.LiveChat_groups.filter(item => item.id === this.state.currentGroupId);
+    const found =  window.LiveChat_groups.filter(item => item.id === this.currentGroupId);
     if (found[0]) {
       return (<ListItem style={styles.groupsItem}>
         <Typography style={styles.groupsText}>{found[0].name}</Typography>

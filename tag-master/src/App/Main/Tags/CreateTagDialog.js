@@ -41,7 +41,7 @@ export default class CreateTagDialog extends Component {
   };
 
   getGroupName = () => {
-    if (window.LiveChat_groups.length < 2) return null;
+    if (window.LiveChat_groups.length < 2 ) return null;
     const found =  window.LiveChat_groups.filter(item => item.id === this.state.currentGroupId);
     if (found[0]) {
       return (<ListItem style={styles.groupsItem}>
@@ -71,7 +71,7 @@ export default class CreateTagDialog extends Component {
           </DialogContentText>
 
           <div style={styles.div}>
-            <a style={styles.a} href="https://www.livechatinc.com/kb/tagging-chats-and-tickets/" target="_blank">Learn more about tags.</a>
+            <a style={styles.a} href="https://www.livechatinc.com/kb/tagging-chats-and-tickets/" target="_blank" rel="noopener noreferrer">Learn more about tags.</a>
           </div>
           {this.getGroupName()}
           <Input

@@ -11,11 +11,11 @@ export default class Main extends Component {
     this.state = {
       value: 0,
       indicatorColor: window.tagMainColor,
-      cansGroup: 0,
     };
     window.LiveChat_tags = [];
     window.LiveChat_cans = [];
     window.LiveChat_groups = [];
+    this.cansGroup = 0;
     this.downloadGroups();
     this.downloadTags();
     this.downloadCans();
@@ -36,7 +36,7 @@ export default class Main extends Component {
 
   updateGroups = (response) => {
     if (response.status === 200) {
-      window.LiveChat_groups = response.data;
+      if(response.data !== 'error') window.LiveChat_groups = response.data;
       this.setState(this.state);
     } else {
       console.error(response);
@@ -45,7 +45,7 @@ export default class Main extends Component {
 
   updateTagsTab = (response) => {
     if (response.status === 200) {
-      window.LiveChat_tags = response.data;
+      if(response.data !== 'error') window.LiveChat_tags = response.data;
       this.setState(this.state);
     } else {
       console.error(response);
@@ -54,7 +54,7 @@ export default class Main extends Component {
 
   updateCansTab = (response) => {
     if (response.status === 200) {
-      window.LiveChat_cans = response.data;
+      if(response.data !== 'error') window.LiveChat_cans = response.data;
       this.setState(this.state);
     } else {
       console.error(response);
@@ -62,7 +62,7 @@ export default class Main extends Component {
   };
 
   downloadCans = (groupId = 0) => {
-    this.state.cansGroup = groupId;
+    this.cansGroup = groupId;
     axios.get(window.serverUrl + '/cans',{
       headers: {
         'Authorization': 'Bearer ' + window.access_token,
@@ -107,7 +107,7 @@ export default class Main extends Component {
             <Tab label="Cans" />
           </Tabs>
         </AppBar>
-        {this.state.value === 0 ? <Tags reload={this.downloadTags} /> : <Cans group={this.state.cansGroup} reload={this.downloadCans} />}
+        {this.state.value === 0 ? <Tags reload={this.downloadTags} /> : <Cans group={this.cansGroup} reload={this.downloadCans} />}
       </Grid>
     );
   }

@@ -76,7 +76,7 @@ export default class CreateCanDialog extends Component {
           </DialogContentText>
 
           <div style={styles.div} >
-            <a style={styles.a} href="https://www.livechatinc.com/kb/canned-responses/" target="_blank">Learn more about canned responses.</a>
+            <a style={styles.a} href="https://www.livechatinc.com/kb/canned-responses/" target="_blank" rel="noopener noreferrer">Learn more about canned responses.</a>
           </div>
 
           {this.getGroupName()}
