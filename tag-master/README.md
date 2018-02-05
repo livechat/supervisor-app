@@ -9,7 +9,6 @@ Before playing with app you should get familiar with [Tags](https://www.livechat
 ## Preview
 
 ![Alt Text](https://raw.githubusercontent.com/venits/react-native-router-flux/master/tag-master-preview1.png)
-
 ![Alt Text](https://raw.githubusercontent.com/venits/react-native-router-flux/master/tag-master-preview2.png)
 
 ## How it works?
