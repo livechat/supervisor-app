@@ -4,7 +4,7 @@ Simple application that shows how to create Agent App Extension with use of Live
 
 Tag Master allows user to create, view and delete tags and canned responses in easy and predictable way.
 
-You can read more about tags [here](https://www.livechatinc.com/kb/tagging-chats-and-tickets/) and about canned responses [here](https://www.livechatinc.com/kb/canned-responses/).
+Before playing with app you should get familiar with [Tags](https://www.livechatinc.com/kb/tagging-chats-and-tickets/) and [Canned Responses](https://www.livechatinc.com/kb/canned-responses/).
 
 ## Preview
 
