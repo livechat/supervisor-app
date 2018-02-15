@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { StyleSheet, css } from 'aphrodite';
 import { Grid, ListItem, Icon, Typography, List, FormControl, Input, Button } from 'material-ui';
 import CreateCanDialog from './CreateCanDialog';
 import CanListItem from './CanListItem';
 import DeleteCanDialog from './DeleteCanDialog';
 import axios from "axios/index";
 import GroupsDialog from '../GroupsDialog/GroupsDialog';
+import Colors from '../Colors';
 
 export default class Cans extends Component {
 
@@ -45,9 +47,9 @@ export default class Cans extends Component {
   };
 
   createCan = (name, description, groupId) => {
-    axios.post(window.serverUrl + '/cans', {
+    axios.post(Colors.serverUrl + '/cans', {
       data: {
-        token: window.access_token,
+        token: this.props.accessToken,
         tags: name.substring(1, name.length).split('#'),
         group: groupId,
         text: description,
@@ -66,9 +68,9 @@ export default class Cans extends Component {
   };
 
   deleteCan = (tags, id) => {
-    axios.delete(window.serverUrl + '/cans', {
+    axios.delete(Colors.serverUrl + '/cans', {
       data: {
-        token: window.access_token,
+        token: this.props.accessToken,
         id,
       },
     })
@@ -80,7 +82,7 @@ export default class Cans extends Component {
 
   renderList = () => {
     const listOfItems = [];
-    window.LiveChat_cans.forEach((item) => {
+    this.props.cans.forEach((item) => {
       if (this.state.search === '' || this.getTags(item).includes(this.state.search)) {
         if (this.currentGroupId === 0) {
           listOfItems.push(<CanListItem
@@ -110,20 +112,20 @@ export default class Cans extends Component {
   };
 
   getGroupId = (groupName) => {
-    const found =  window.LiveChat_groups.filter(item => item.name === groupName);
+    const found =  this.props.groups.filter(item => item.name === groupName);
     return found[0].id || 0;
   };
 
   getGroupName = () => {
-    if (window.LiveChat_groups.length < 2) return null;
-    const found =  window.LiveChat_groups.filter(item => item.id === this.currentGroupId);
+    if (this.props.groups.length < 2) return null;
+    const found =  this.props.groups.filter(item => item.id === this.currentGroupId);
     if (found[0]) {
-      return (<ListItem style={styles.groupsItem}>
-        <Typography style={styles.groupsText}>{found[0].name}</Typography>
+      return (<ListItem className={css(styles.groupsItem)}>
+        <Typography className={css(styles.groupsText)}>{found[0].name}</Typography>
         <Button
           onClick={this.openChangeGroupDialog(found[0].name)}
-          style={{color: window.canMainColor}}
-        >Change
+          className={css(styles.change)}>
+          Change
         </Button>
       </ListItem>);
     }
@@ -133,20 +135,20 @@ export default class Cans extends Component {
   render() {
     return (
       <Grid>
-        <ListItem style={styles.create} button onClick={this.showCreateCanDialog}>
-          <Icon style={styles.addIcon}>
+        <ListItem className={css(styles.create)} button onClick={this.showCreateCanDialog}>
+          <Icon className={css(styles.addIcon)}>
             add_circle
           </Icon>
-          <Typography style={styles.addText}>Add new canned response</Typography>
+          <Typography className={css(styles.addText)}>Add new canned response</Typography>
         </ListItem>
         {this.getGroupName()}
-        <List style={styles.list}>
+        <List className={css(styles.list)}>
           {this.renderList()}
         </List>
 
-        <FormControl fullWidth style={styles.inputForm}>
+        <FormControl fullWidth className={css(styles.inputForm)}>
           <Input
-            style={styles.input}
+            className={css(styles.input)}
             id="name-simple"
             disableUnderline
             placeholder="Search..."
@@ -154,26 +156,23 @@ export default class Cans extends Component {
             onChange={this.searchData}
           />
         </FormControl>
-
-        <CreateCanDialog create={this.createCan} ref={(ref) => { this.createDialog = ref; }} />
+        <CreateCanDialog create={this.createCan} groups={this.props.groups} ref={(ref) => { this.createDialog = ref; }} />
         <DeleteCanDialog delete={this.deleteCan} ref={(ref) => { this.deleteDialog = ref; }} />
-        <GroupsDialog
-          change={this.changeGroup}
-          ref={(ref) => {
-            this.groupsDialog = ref;
-          }}
-        />
+        <GroupsDialog change={this.changeGroup} ref={(ref) => { this.groupsDialog = ref; }} groups={this.props.groups}/>
       </Grid>
     );
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
   create: {
-    backgroundColor: window.canMainColor, marginTop: '3%',
+    backgroundColor: Colors.canMainColor, marginTop: '3%',
   },
   addIcon: {
     color: 'white', fontSize: '240%',
+  },
+  change: {
+    color: Colors.canMainColor,
   },
   groupsItem: {
     backgroundColor: '#F5F5F5', paddingTop: '2%', paddingBottom: '2%'
@@ -193,10 +192,17 @@ const styles = {
   input: {
     padding: '2%', paddingLeft: '5%', fontSize: '120%', fontWeight: '400', backgroundColor: '#F5F5F5',
   },
-};
+});
 
 Cans.propTypes = {
   reload: PropTypes.func.isRequired,
   group: PropTypes.number.isRequired,
+  accessToken: PropTypes.string.isRequired,
+  cans: PropTypes.array,
+  groups: PropTypes.array,
 };
 
+Cans.defaultProps = {
+  cans: [],
+  groups: [],
+};

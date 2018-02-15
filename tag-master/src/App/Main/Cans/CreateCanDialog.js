@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Input, Typography, ListItem } from 'material-ui';
 import GroupsDialog from '../GroupsDialog/GroupsDialog';
+import { StyleSheet, css } from 'aphrodite';
+import Colors from '../Colors';
 
 export default class CreateCanDialog extends Component {
 
@@ -41,20 +43,20 @@ export default class CreateCanDialog extends Component {
   };
 
   getGroupId = (groupName) => {
-    const found =  window.LiveChat_groups.filter(item => item.name === groupName);
+    const found =  this.props.groups.filter(item => item.name === groupName);
     return found[0].id || 0;
   };
 
   getGroupName = () => {
-    if (window.LiveChat_groups.length < 2) return null;
-    const found =  window.LiveChat_groups.filter(item => item.id === this.state.currentGroupId);
+    if (this.props.groups.length < 2) return null;
+    const found =  this.props.groups.filter(item => item.id === this.state.currentGroupId);
     if (found[0]) {
-      return (<ListItem style={styles.groupsItem}>
-        <Typography style={styles.groupsText}>{found[0].name}</Typography>
+      return (<ListItem className={css(styles.groupsItem)}>
+        <Typography className={css(styles.groupsText)}>{found[0].name}</Typography>
         <Button
           onClick={this.openChangeGroupDialog(found[0].name)}
-          style={{ color: window.canMainColor }}
-        >Change
+          className={css(styles.change)}>
+          Change
         </Button>
       </ListItem>);
     }
@@ -75,22 +77,26 @@ export default class CreateCanDialog extends Component {
             It will shorten your response times and save keystrokes on repetitive typing.
           </DialogContentText>
 
-          <div style={styles.div} >
-            <a style={styles.a} href="https://www.livechatinc.com/kb/canned-responses/" target="_blank" rel="noopener noreferrer">Learn more about canned responses.</a>
+          <div className={css(styles.container)} >
+            <a
+              className={css(styles.a)}
+              href="https://www.livechatinc.com/kb/canned-responses/"
+              target="_blank"
+              rel="noopener noreferrer">
+              Learn more about canned responses.
+            </a>
           </div>
-
           {this.getGroupName()}
-
-          <Typography style={styles.name}>Tag name:</Typography>
+          <Typography className={css(styles.name)}>Tag name:</Typography>
           <Input
             margin="dense"
             onChange={this.handleChange}
             value={this.state.name}
             disableUnderline
-            style={styles.nameInput}
+            className={css(styles.nameInput)}
             fullWidth
           />
-          <Typography style={styles.desc}>Description:</Typography>
+          <Typography className={css(styles.desc)}>Description:</Typography>
           <Input
             margin="dense"
             value={this.state.description}
@@ -98,35 +104,43 @@ export default class CreateCanDialog extends Component {
             onChange={this.handleDescription}
             multiline
             placeholder="Write something..."
-            style={styles.descInput}
+            className={css(styles.descInput)}
             fullWidth
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.changeDialogState} style={{ color: window.canMainColor }}>
+          <Button onClick={this.changeDialogState} className={css(styles.cancel)}>
             Cancel
           </Button>
-          <Button onClick={this.createNewCan} style={{ color: '#388E3C' }}>
+          <Button onClick={this.createNewCan} className={css(styles.create)}>
             Create
           </Button>
         </DialogActions>
         <GroupsDialog
           change={this.changeGroup}
-          ref={(ref) => {
-            this.groupsDialog = ref;
-          }}
+          groups={this.props.groups}
+          ref={(ref) => { this.groupsDialog = ref; }}
         />
       </Dialog>
     );
   }
 }
 
-const styles = {
-  div: {
+const styles = StyleSheet.create({
+  container: {
     marginTop: '3%', marginBottom: '3%',
   },
   a: {
-    color: window.canMainColor, textDecoration: 'none',
+    color: Colors.canMainColor, textDecoration: 'none',
+  },
+  cancel: {
+    color: Colors.canMainColor,
+  },
+  create: {
+    color: '#388E3C',
+  },
+  change: {
+    color: Colors.canMainColor,
   },
   name: {
     color: '#777', marginBottom: '2%', marginTop: '3%',
@@ -146,8 +160,9 @@ const styles = {
   groupsText: {
     color: '#888', fontSize: '110%', fontWeight: '400',
   },
-};
+});
 
 CreateCanDialog.propTypes = {
   create: PropTypes.func.isRequired,
+  groups: PropTypes.array.isRequired,
 };

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Dialog, DialogTitle, DialogContent, RadioGroup, FormControlLabel, Radio, DialogActions, Button } from 'material-ui';
+import Colors from '../Colors';
 
 export default class GroupsDialog extends Component {
 
@@ -12,7 +13,7 @@ export default class GroupsDialog extends Component {
   };
 
   changeDialogState = (groupName, tagOrCan) => {
-    const groups = window.LiveChat_groups.map(item => item.name);
+    const groups = this.props.groups.map(item => item.name);
     this.setState({
       show: !this.state.show, groupName, groups, tagOrCan,
     });
@@ -57,17 +58,17 @@ export default class GroupsDialog extends Component {
               <FormControlLabel
                 value={option}
                 key={option}
-                control={<Radio style={{ color: this.state.tagOrCan ? window.canMainColor : window.tagMainColor }} />}
+                control={<Radio style={{ color: this.state.tagOrCan ? Colors.canMainColor : Colors.tagMainColor }} />}
                 label={option}
               />
             ))}
           </RadioGroup>
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.hideDialog} style={{ color: this.state.tagOrCan ? window.canMainColor : window.tagMainColor }}>
+          <Button onClick={this.hideDialog} style={{ color: this.state.tagOrCan ? Colors.canMainColor : Colors.tagMainColor }}>
             Cancel
           </Button>
-          <Button onClick={this.changeGroup} style={{ color: this.state.tagOrCan ? window.canMainColor : window.tagMainColor }}>
+          <Button onClick={this.changeGroup} style={{ color: this.state.tagOrCan ? Colors.canMainColor : Colors.tagMainColor }}>
             Change
           </Button>
         </DialogActions>
@@ -78,4 +79,5 @@ export default class GroupsDialog extends Component {
 
 GroupsDialog.propTypes = {
   change: PropTypes.func.isRequired,
+  groups: PropTypes.array.isRequired,
 };

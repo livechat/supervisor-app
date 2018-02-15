@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Grid, AppBar, Tabs, Tab } from 'material-ui';
 import axios from 'axios/index';
+import Colors from '../../Colors';
 
 export default class Response extends Component {
   state = {
@@ -43,9 +44,9 @@ export default class Response extends Component {
   downloadResponsesFromServer = (tabId = 0) => {
     this.setState({ isDownloadingResponses: true, currentTabIndex: tabId, lastTabIndex: -1 });
 
-    axios.get(window.serverUrl + '/responses', {
+    axios.get(Colors.serverUrl + '/responses', {
       headers: {
-        "Authorization": 'Bearer ' + window.access_token,
+        "Authorization": 'Bearer ' + this.props.accessToken,
         "DateInterval": tabId,
         "X-API-Version": '2',
       },
@@ -68,7 +69,7 @@ export default class Response extends Component {
     if (bar) {
       arrayOfData.push(['Interval', 'Time', { role: 'style' }]);
       Object.keys(object).forEach((key) => {
-        arrayOfData.push([key , object[key].avg_response_time.seconds, window.responseMainColor]);
+        arrayOfData.push([key , object[key].avg_response_time.seconds, Colors.responseMainColor]);
       });
     } else {
       arrayOfData.push(['Interval', 'Time']);
@@ -90,7 +91,7 @@ export default class Response extends Component {
       title: 'Average response time (in seconds)',
       legend: { position: 'none' },
       backgroundColor: { fill: '#F5F5F5', strokeWidth: window.innerWidth / 10, stroke: 'white' },
-      colors:[window.responseMainColor],
+      colors:[Colors.responseMainColor],
       chartArea: { width: '78%', left: window.innerWidth / 8 },
       titleTextStyle: { color: '#555', fontSize: '13' },
       vAxis: { minValue: 0 },
@@ -120,7 +121,7 @@ export default class Response extends Component {
 
   render() {
     if (!this.state.canUseThisMethod) {
-      return <h2 style={headerStyle}>This method is allowed only for the following plans: enterpriseplus, enterprise, basic, premium, pro.</h2>;
+      return <h4 style={headerStyle}>This method is allowed only for the following plans: enterpriseplus, enterprise, basic, premium, pro.</h4>;
     }
     if (this.state.lastTabIndex !== this.state.currentTabIndex) {
       if (window.google.visualization && this.props.show && !this.state.isDownloadingChatting) this.drawCharts();
@@ -131,7 +132,7 @@ export default class Response extends Component {
           <Tabs
             value={this.state.currentTabIndex}
             onChange={this.handleChange}
-            indicatorColor={window.responseMainColorLight}
+            indicatorColor={Colors.responseMainColorLight}
           >
             <Tab style={{ width: '33.33%' }} label="Day" />
             <Tab style={{ width: '33.33%' }} label="Week" />
@@ -151,4 +152,5 @@ const headerStyle = {
 
 Response.propTypes = {
   show: PropTypes.bool.isRequired,
+  accessToken: PropTypes.string.isRequired,
 };

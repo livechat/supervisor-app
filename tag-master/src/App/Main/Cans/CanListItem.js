@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { StyleSheet, css } from 'aphrodite';
 import { Icon, ListItem, Typography, Collapse, List, ListItemText, Grid } from 'material-ui';
+import Colors from '../Colors';
 
 export default class CanListItem extends Component {
 
@@ -37,20 +39,16 @@ export default class CanListItem extends Component {
     return (
       <Grid>
         <ListItem button onClick={this.openInformation}>
-          {this.state.showInfo ? <Icon style={styles.icon}>info</Icon>
-            : <Icon style={styles.icon}>info_outline</Icon>}
-
+          {this.state.showInfo ? <Icon className={css(styles.icon)}>info</Icon>
+            : <Icon className={css(styles.icon)}>info_outline</Icon>}
           <Grid style={{ flex: 1 }}>
-            <Typography style={styles.tags}>{this.getTags()}</Typography>
-            <Typography style={styles.desc}>{this.state.item.text}</Typography>
+            <Typography className={css(styles.tags)}>{this.getTags()}</Typography>
+            <Typography className={css(styles.desc)}>{this.state.item.text}</Typography>
           </Grid>
-
-          <Icon onClick={this.deleteCan} style={styles.remove}>
+          <Icon onClick={this.deleteCan} className={css(styles.remove)}>
             remove_circle_outline
           </Icon>
-
         </ListItem>
-
         <Collapse component="li" in={this.state.showInfo} timeout="auto" unmountOnExit>
           <List>
             { this.state.item.created_by ?  <ListItem>
@@ -67,9 +65,9 @@ export default class CanListItem extends Component {
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
   icon: {
-    color: window.canMainColor, fontSize: '250%',
+    color: Colors.canMainColor, fontSize: '250%',
   },
   tags: {
     color: '#333', paddingLeft: '4%', paddingRight: '4%', flex: 1, fontSize: '100%', fontWeight: '500',
@@ -80,7 +78,7 @@ const styles = {
   remove: {
     color: '#F44336', fontSize: '250%',
   },
-};
+});
 
 CanListItem.propTypes = {
   item: PropTypes.object.isRequired, //eslint-disable-line

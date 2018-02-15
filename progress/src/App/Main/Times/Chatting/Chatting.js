@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Grid, AppBar, Tabs, Tab } from 'material-ui';
 import axios from 'axios/index';
+import Colors from '../../Colors';
 
 export default class Chatting extends Component {
   state = {
@@ -41,9 +42,9 @@ export default class Chatting extends Component {
   downloadChatTimeFromServer = (tabId = 0) => {
     this.setState({ isDownloadingChatting: true, currentTabIndex: tabId, lastTabIndex: -1 });
 
-    axios.get(window.serverUrl + '/chatting', {
+    axios.get(Colors.serverUrl + '/chatting', {
       headers: {
-        "Authorization": 'Bearer ' + window.access_token,
+        "Authorization": 'Bearer ' + this.props.accessToken,
         "DateInterval": tabId,
         "X-API-Version": '2',
       },
@@ -67,9 +68,9 @@ export default class Chatting extends Component {
       arrayOfData.push(['Interval', 'Time', { role: 'style' }]);
       Object.keys(object).forEach((key) => {
         if (Number.isInteger(object[key].minutes)) {
-          arrayOfData.push([key , object[key].minutes, window.chattingMainColor]);
+          arrayOfData.push([key , object[key].minutes, Colors.chattingMainColor]);
         } else {
-          arrayOfData.push([key , object[key].hours, window.chattingMainColor]);
+          arrayOfData.push([key , object[key].hours, Colors.chattingMainColor]);
         }
       });
     } else {
@@ -96,7 +97,7 @@ export default class Chatting extends Component {
       title: this.state.currentTabIndex === 0 ? 'Chatting time: minutes / hour' : 'Chatting time: hours / day',
       legend: { position: 'none' },
       backgroundColor: { fill: '#F5F5F5', strokeWidth: window.innerWidth / 10, stroke: 'white' },
-      colors: [window.chattingMainColor],
+      colors: [Colors.chattingMainColor],
       chartArea: { width: '78%', left: window.innerWidth / 8 },
       titleTextStyle: { color: '#555', fontSize: '13' },
       vAxis: { minValue: 0 },
@@ -134,7 +135,7 @@ export default class Chatting extends Component {
           <Tabs
             value={this.state.currentTabIndex}
             onChange={this.handleChange}
-            indicatorColor={window.chattingMainColorLight}
+            indicatorColor={Colors.chattingMainColorLight}
           >
             <Tab style={{ width: '33.33%' }} label="Day" />
             <Tab style={{ width: '33.33%' }} label="Week" />
@@ -150,4 +151,5 @@ export default class Chatting extends Component {
 
 Chatting.propTypes = {
   show: PropTypes.bool.isRequired,
+  accessToken: PropTypes.string.isRequired,
 };

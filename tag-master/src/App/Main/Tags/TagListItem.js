@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Icon, ListItem, Typography, Collapse, List, ListItemText, Grid } from 'material-ui';
+import { StyleSheet, css } from 'aphrodite';
+import Colors from '../Colors';
 
 export default class TagListItem extends Component {
 
@@ -30,7 +32,7 @@ export default class TagListItem extends Component {
   };
 
   getGroupName = () => {
-    const found =  window.LiveChat_groups.filter(item => item.id === this.state.item.group);
+    const found =  this.props.groups.filter(item => item.id === this.state.item.group);
     if (found[0]) {
       return found[0].name;
     }
@@ -41,14 +43,13 @@ export default class TagListItem extends Component {
     return (
       <Grid>
         <ListItem button onClick={this.openInformation}>
-          {this.state.showInfo ? <Icon style={styles.info}>info</Icon>
-            : <Icon style={styles.info}>info_outline</Icon>}
-          <Typography style={styles.name}>#{this.state.item.name}</Typography>
-          <Typography
-            style={styles.count}
-          >Used {this.getUsedCount(this.state.item.count)} times
+          {this.state.showInfo ? <Icon className={css(styles.info)}>info</Icon>
+            : <Icon className={css(styles.info)}>info_outline</Icon>}
+          <Typography className={css(styles.name)}>#{this.state.item.name}</Typography>
+          <Typography className={css(styles.count)}>
+            Used {this.getUsedCount(this.state.item.count)} times
           </Typography>
-          <Icon onClick={this.deleteTag} style={styles.remove}>
+          <Icon onClick={this.deleteTag} className={css(styles.remove)}>
             remove_circle_outline
           </Icon>
         </ListItem>
@@ -77,9 +78,9 @@ export default class TagListItem extends Component {
   }
 }
 
-const styles = {
+const styles = StyleSheet.create({
   info: {
-    color: window.tagMainColor, fontSize: '250%',
+    color: Colors.tagMainColor, fontSize: '250%',
   },
   name: {
     color: '#333', paddingLeft: '4%', flex: 1, fontSize: '110%', fontWeight: '500',
@@ -90,9 +91,10 @@ const styles = {
   remove: {
     color: '#F44336', fontSize: '250%',
   },
-};
+});
 
 TagListItem.propTypes = {
   item: PropTypes.object.isRequired, // eslint-disable-line
   delete: PropTypes.func.isRequired,
+  groups: PropTypes.array.isRequired,
 };

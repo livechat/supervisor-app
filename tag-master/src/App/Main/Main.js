@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import { Grid, AppBar, Tabs, Tab } from 'material-ui';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import Colors from './Colors'; // eslint-disable-line
 import Tags from './Tags/Tags';
 import Cans from './Cans/Cans';
 
 export default class Main extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: 0,
-      indicatorColor: window.tagMainColor,
-    };
-    window.LiveChat_tags = [];
-    window.LiveChat_cans = [];
-    window.LiveChat_groups = [];
+
+  state = {
+    value: 0,
+    indicatorColor: Colors.tagMainColor,
+    LiveChat_tags: [],
+    LiveChat_cans: [],
+    LiveChat_groups: [],
+  };
+
+  componentDidMount() {
     this.cansGroup = 0;
     this.downloadGroups();
     this.downloadTags();
@@ -22,9 +24,9 @@ export default class Main extends Component {
   }
 
    downloadGroups = () => {
-     axios.get(window.serverUrl + '/groups',{
+     axios.get(Colors.serverUrl + '/groups',{
        headers: {
-         'Authorization': 'Bearer ' + window.access_token,
+         'Authorization': 'Bearer ' + this.props.accessToken,
          'X-API-Version': '2',
        },
      })
@@ -36,8 +38,7 @@ export default class Main extends Component {
 
   updateGroups = (response) => {
     if (response.status === 200) {
-      if(response.data !== 'error') window.LiveChat_groups = response.data;
-      this.setState(this.state);
+      if(response.data !== 'error') this.setState({ LiveChat_groups: response.data});
     } else {
       console.error(response);
     }
@@ -45,8 +46,7 @@ export default class Main extends Component {
 
   updateTagsTab = (response) => {
     if (response.status === 200) {
-      if(response.data !== 'error') window.LiveChat_tags = response.data;
-      this.setState(this.state);
+      if(response.data !== 'error') this.setState({ LiveChat_tags: response.data });
     } else {
       console.error(response);
     }
@@ -54,8 +54,7 @@ export default class Main extends Component {
 
   updateCansTab = (response) => {
     if (response.status === 200) {
-      if(response.data !== 'error') window.LiveChat_cans = response.data;
-      this.setState(this.state);
+      if(response.data !== 'error') this.setState({ LiveChat_cans: response.data});
     } else {
       console.error(response);
     }
@@ -63,9 +62,9 @@ export default class Main extends Component {
 
   downloadCans = (groupId = 0) => {
     this.cansGroup = groupId;
-    axios.get(window.serverUrl + '/cans',{
+    axios.get(Colors.serverUrl + '/cans',{
       headers: {
-        'Authorization': 'Bearer ' + window.access_token,
+        'Authorization': 'Bearer ' + this.props.accessToken,
         'X-API-Version': '2',
         'Group': groupId
       },
@@ -77,9 +76,9 @@ export default class Main extends Component {
   };
 
   downloadTags = () => {
-    axios.get(window.serverUrl + '/tags',{
+    axios.get(Colors.serverUrl + '/tags',{
       headers: {
-        'Authorization': 'Bearer ' + window.access_token,
+        'Authorization': 'Bearer ' + this.props.accessToken,
         'X-API-Version': '2',
       },
     })
@@ -90,7 +89,7 @@ export default class Main extends Component {
   };
 
   handleChange = (event, value) => {
-    this.setState({ value, indicatorColor: value === 0 ? window.tagMainColor : window.canMainColor });
+    this.setState({ value, indicatorColor: value === 0 ? Colors.tagMainColor : Colors.canMainColor });
   };
 
   render() {
@@ -107,8 +106,13 @@ export default class Main extends Component {
             <Tab label="Cans" />
           </Tabs>
         </AppBar>
-        {this.state.value === 0 ? <Tags reload={this.downloadTags} /> : <Cans group={this.cansGroup} reload={this.downloadCans} />}
+        {this.state.value === 0 ? <Tags accessToken={this.props.accessToken} reload={this.downloadTags} tags={this.state.LiveChat_tags} groups={this.state.LiveChat_groups}/>
+          : <Cans accessToken={this.props.accessToken} group={this.cansGroup} cans={this.state.LiveChat_cans} reload={this.downloadCans} groups={this.state.LiveChat_groups}/>}
       </Grid>
     );
   }
 }
+
+Main.propTypes = {
+  accessToken: PropTypes.string.isRequired,
+};

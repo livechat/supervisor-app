@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Grid, AppBar, Tabs, Tab } from 'material-ui';
 import Response from './Response/Response';
 import Chatting from './Chatting/Chatting';
+import Colors from '../Colors';
 
 export default class Times extends Component {
   state = {
@@ -26,14 +27,14 @@ export default class Times extends Component {
           <Tabs
             value={this.state.currentTabIndex}
             onChange={this.handleChange}
-            indicatorColor={this.state.currentTabIndex === 0 ? window.chattingMainColor : window.responseMainColor}
+            indicatorColor={this.state.currentTabIndex === 0 ? Colors.chattingMainColor : Colors.responseMainColor}
           >
             <Tab style={{ width: '50%' }} label="Chatting time" />
             <Tab style={{ width: '50%' }} label="Response time" />
           </Tabs>
         </AppBar>
-        <Chatting ref={(ref) => { this.chatting = ref; }} show={this.state.currentTabIndex === 0 && this.props.show} />
-        <Response ref={(ref) => { this.response = ref; }} show={this.state.currentTabIndex === 1 && this.props.show} />
+        <Chatting accessToken={this.props.accessToken} ref={(ref) => { this.chatting = ref; }} show={this.state.currentTabIndex === 0 && this.props.show} />
+        <Response accessToken={this.props.accessToken} ref={(ref) => { this.response = ref; }} show={this.state.currentTabIndex === 1 && this.props.show} />
       </Grid>
     );
   }
@@ -41,4 +42,5 @@ export default class Times extends Component {
 
 Times.propTypes = {
   show: PropTypes.bool.isRequired,
+  accessToken: PropTypes.string.isRequired,
 };

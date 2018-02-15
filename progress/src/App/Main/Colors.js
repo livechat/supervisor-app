@@ -1,16 +1,23 @@
-window.timesMainColor = '#009688';
-window.timesMainColorStrong = '#00796B';
-window.timesMainColorLight = '#4DB6AC';
+export default {
+  // times tab colors
+  timesMainColor: '#009688',
+  timesMainColorStrong: '#00796B',
+  timesMainColorLight: '#4DB6AC',
 
-window.ratingsMainColor = '#2196F3';
-window.ratingsMainColorStrong = '#1976D2';
-window.ratingsMainColorLight = '#64B5F6';
+  //ratings tab colors
+  ratingsMainColor: '#2196F3',
+  ratingsMainColorStrong: '#1976D2',
+  ratingsMainColorLight: '#64B5F6',
 
-window.responseMainColor = '#3F51B5';
-window.responseMainColorLight = '#5C6BC0';
+  // response tab colors
+  responseMainColor: '#3F51B5',
+  responseMainColorLight: '#5C6BC0',
 
-window.chattingMainColor = '#673AB7';
-window.chattingMainColorLight = '#9575CD';
+  //chatting tab colors
+  chattingMainColor: '#673AB7',
+  chattingMainColorLight: '#9575CD',
 
-window.tabOff = '#444';
-window.serverUrl = 'https://romantic-option.glitch.me';
+  //others
+  tabOff: '#444',
+  serverUrl: 'https://romantic-option.glitch.me', 
+}

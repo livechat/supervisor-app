@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Grid, AppBar, Tabs, Tab } from 'material-ui';
 import axios from 'axios';
+import Colors from '../Colors';
 
 const timeIntervals = ['day', 'week', 'month', 'quarter', 'year'];
 
@@ -32,9 +33,9 @@ export default class Ratings extends Component{
   downloadRatingsFromServer = (tabId = 0) => {
     this.setState({isDownloadingRatings: true, currentTabIndex: tabId, lastTabIndex: -1});
 
-    axios.get(window.serverUrl + '/ratings/' + timeIntervals[tabId],{
+    axios.get(Colors.serverUrl + '/ratings/' + timeIntervals[tabId],{
       headers: {
-        "Authorization": 'Bearer ' + window.access_token,
+        "Authorization": 'Bearer ' + this.props.accessToken,
         "X-API-Version": '2',
       },
     })
@@ -121,7 +122,7 @@ export default class Ratings extends Component{
           <Tabs
             value={this.state.currentTabIndex}
             onChange={this.handleChange}
-            indicatorColor={window.ratingsMainColorLight}
+            indicatorColor={Colors.ratingsMainColorLight}
           >
             <Tab style={{ width: '20%' }} label="Day" />
             <Tab style={{ width: '20%' }} label="Week" />
@@ -139,4 +140,5 @@ export default class Ratings extends Component{
 
 Ratings.propTypes = {
   show: PropTypes.bool.isRequired,
+  accessToken: PropTypes.string.isRequired,
 };

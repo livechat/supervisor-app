@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from 'material-ui';
+import Colors from '../Colors';
+import { StyleSheet, css } from 'aphrodite';
 
 export default class DeleteCanDialog extends Component {
 
@@ -44,10 +46,10 @@ export default class DeleteCanDialog extends Component {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={this.hideDialog} style={{ color: window.canMainColor }}>
+          <Button onClick={this.hideDialog} className={css(styles.cancel)}>
             Cancel
           </Button>
-          <Button onClick={this.deleteTag} style={{ color: '#F44336' }}>
+          <Button onClick={this.deleteTag} className={css(styles.delete)}>
             Delete
           </Button>
         </DialogActions>
@@ -59,3 +61,12 @@ export default class DeleteCanDialog extends Component {
 DeleteCanDialog.propTypes = {
   delete: PropTypes.func.isRequired,
 };
+
+const styles = StyleSheet.create({
+  cancel: {
+    color: Colors.canMainColor,
+  },
+  delete: {
+    color: '#F44336',
+  }
+});
