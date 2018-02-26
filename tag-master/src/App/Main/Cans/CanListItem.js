@@ -52,14 +52,20 @@ export default class CanListItem extends Component {
         <Collapse component="li" in={this.state.showInfo} timeout="auto" unmountOnExit>
           <List>
             { this.state.item.created_by ?  <ListItem>
-              <ListItemText inset primary={'Author: ' + this.state.item.created_by} />
-            </ListItem> : <ListItem><ListItemText inset primary={'Author: default'} /></ListItem>}
+              <ListItemText inset primary={
+                <span>Author: <strong>{this.state.item.created_by}</strong></span>
+              }/>
+            </ListItem> : <ListItem><ListItemText inset primary={
+              <span>Author: <strong>default</strong></span>
+            }/>
+            </ListItem>}
             <ListItem>
-              <ListItemText inset primary={'Created at: ' + this.state.date} />
+              <ListItemText inset primary={
+                <span>Created at: <strong>{this.state.date}</strong></span>
+              }/>
             </ListItem>
           </List>
         </Collapse>
-
       </Grid>
     );
   }
@@ -67,16 +73,30 @@ export default class CanListItem extends Component {
 
 const styles = StyleSheet.create({
   icon: {
-    color: Colors.canMainColor, fontSize: '250%',
+    color: Colors.canMainColor,
+    fontSize: '250%',
+    alignSelf: 'flex-start',
   },
   tags: {
-    color: '#333', paddingLeft: '4%', paddingRight: '4%', flex: 1, fontSize: '100%', fontWeight: '500',
+    color: '#333',
+    paddingLeft: '4%',
+    paddingRight: '4%',
+    flex: 1,
+    fontSize: '100%',
+    fontWeight: '500',
   },
   desc: {
-    paddingLeft: '4%', paddingRight: '4%', flex: 1, fontSize: '90%', fontWeight: '300', color: '#757575',
+    paddingLeft: '4%',
+    paddingRight: '4%',
+    flex: 1,
+    fontSize: '90%',
+    fontWeight: '300',
+    color: '#757575',
   },
   remove: {
-    color: '#F44336', fontSize: '250%',
+    color: '#F44336',
+    fontSize: '250%',
+    alignSelf: 'flex-start',
   },
 });
 

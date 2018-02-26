@@ -8,6 +8,7 @@ import DeleteCanDialog from './DeleteCanDialog';
 import axios from "axios/index";
 import GroupsDialog from '../GroupsDialog/GroupsDialog';
 import Colors from '../Colors';
+import Config from '../../Config';
 
 export default class Cans extends Component {
 
@@ -47,7 +48,7 @@ export default class Cans extends Component {
   };
 
   createCan = (name, description, groupId) => {
-    axios.post(Colors.serverUrl + '/cans', {
+    axios.post(Config.serverUrl + '/cans', {
       data: {
         token: this.props.accessToken,
         tags: name.substring(1, name.length).split('#'),
@@ -68,7 +69,7 @@ export default class Cans extends Component {
   };
 
   deleteCan = (tags, id) => {
-    axios.delete(Colors.serverUrl + '/cans', {
+    axios.delete(Config.serverUrl + '/cans', {
       data: {
         token: this.props.accessToken,
         id,

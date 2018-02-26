@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Grid, AppBar, Tabs, Tab } from 'material-ui';
 import PropTypes from 'prop-types';
 import axios from 'axios';
-import Colors from './Colors'; // eslint-disable-line
+import Colors from './Colors';
+import Config from '../Config';
 import Tags from './Tags/Tags';
 import Cans from './Cans/Cans';
 
@@ -24,7 +25,7 @@ export default class Main extends Component {
   }
 
    downloadGroups = () => {
-     axios.get(Colors.serverUrl + '/groups',{
+     axios.get(Config.serverUrl + '/groups',{
        headers: {
          'Authorization': 'Bearer ' + this.props.accessToken,
          'X-API-Version': '2',
@@ -62,7 +63,7 @@ export default class Main extends Component {
 
   downloadCans = (groupId = 0) => {
     this.cansGroup = groupId;
-    axios.get(Colors.serverUrl + '/cans',{
+    axios.get(Config.serverUrl + '/cans',{
       headers: {
         'Authorization': 'Bearer ' + this.props.accessToken,
         'X-API-Version': '2',
@@ -76,7 +77,7 @@ export default class Main extends Component {
   };
 
   downloadTags = () => {
-    axios.get(Colors.serverUrl + '/tags',{
+    axios.get(Config.serverUrl + '/tags',{
       headers: {
         'Authorization': 'Bearer ' + this.props.accessToken,
         'X-API-Version': '2',

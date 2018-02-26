@@ -47,7 +47,7 @@ export default class TagListItem extends Component {
             : <Icon className={css(styles.info)}>info_outline</Icon>}
           <Typography className={css(styles.name)}>#{this.state.item.name}</Typography>
           <Typography className={css(styles.count)}>
-            Used {this.getUsedCount(this.state.item.count)} times
+            Usage: {this.getUsedCount(this.state.item.count)}
           </Typography>
           <Icon onClick={this.deleteTag} className={css(styles.remove)}>
             remove_circle_outline
@@ -57,19 +57,29 @@ export default class TagListItem extends Component {
         <Collapse component="li" in={this.state.showInfo} timeout="auto" unmountOnExit>
           <List>
             <ListItem>
-              <ListItemText inset primary={'Used in chats: ' + this.state.item.count.inChats} />
+              <ListItemText inset primary={
+                <span>Used in chats: <strong>{this.state.item.count.inChats}</strong></span>
+              }/>
             </ListItem>
             <ListItem>
-              <ListItemText inset primary={'Used in chats: ' + this.state.item.count.inTickets} />
+              <ListItemText inset primary={
+                <span>Used in tickets: <strong>{this.state.item.count.inTickets}</strong></span>
+              }/>
             </ListItem>
             { this.state.item.author ?  <ListItem>
-              <ListItemText inset primary={'Author: ' + this.state.item.author} />
+              <ListItemText inset primary={
+                <span>Author: <strong>{this.state.item.author}</strong></span>
+                }/>
             </ListItem> : null}
             <ListItem>
-              <ListItemText inset primary={'Created at: ' + this.state.date} />
+              <ListItemText inset primary={
+                <span>Created at: <strong>{this.state.date}</strong></span>
+              }/>
             </ListItem>
             <ListItem>
-              <ListItemText inset primary={'Group: ' + this.getGroupName()} />
+              <ListItemText inset primary={
+                <span>Group: <strong>{this.getGroupName()}</strong></span>
+              }/>
             </ListItem>
           </List>
         </Collapse>
@@ -83,10 +93,10 @@ const styles = StyleSheet.create({
     color: Colors.tagMainColor, fontSize: '250%',
   },
   name: {
-    color: '#333', paddingLeft: '4%', flex: 1, fontSize: '110%', fontWeight: '500',
+    color: '#444', marginLeft: '3%', flex: 1, fontSize: '96%', fontWeight: '500',
   },
   count: {
-    flex: 1, fontSize: '90%', fontWeight: '300', color: '#757575',
+    fontSize: '80%', fontWeight: '300', color: '#757575', marginRight: '2%',
   },
   remove: {
     color: '#F44336', fontSize: '250%',

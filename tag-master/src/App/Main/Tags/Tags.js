@@ -8,6 +8,7 @@ import TagListItem from './TagListItem';
 import CreateTagDialog from './CreateTagDialog';
 import DeleteTagDialog from './DeleteTagDialog';
 import GroupsDialog from '../GroupsDialog/GroupsDialog';
+import Config from '../../Config';
 
 export default class Tags extends Component {
   state = {
@@ -40,7 +41,7 @@ export default class Tags extends Component {
   };
 
   createTag = (name, groupId) => {
-    axios.post(Colors.serverUrl + '/tags', {
+    axios.post(Config.serverUrl + '/tags', {
       data: {
         token: this.props.accessToken,
         group: groupId,
@@ -54,7 +55,7 @@ export default class Tags extends Component {
   };
 
   deleteTag = (name, groupId) => {
-    axios.delete(Colors.serverUrl + '/tags', {
+    axios.delete(Config.serverUrl + '/tags', {
       data: {
         token: this.props.accessToken,
         group: groupId,
