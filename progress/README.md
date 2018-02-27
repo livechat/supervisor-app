@@ -10,7 +10,7 @@ Progress is a sample app that creates reports based on data from chats.
 
 ![Alt Text](https://raw.githubusercontent.com/venits/react-native-router-flux/master/progress_photo1.png)
 ![Alt Text](https://raw.githubusercontent.com/venits/react-native-router-flux/master/progress_photo2.png)
-![Alt Text](https://raw.githubusercontent.com/venits/react-native-router-flux/master/progress_photo2.png)
+![Alt Text](https://raw.githubusercontent.com/venits/react-native-router-flux/master/progress_photo3.png)
 ## How it works?
 
 [Agent App Extensions](https://docs.livechatinc.com/agent-app-widgets/) are web applications loaded inside the LiveChat Agent App. All agents can interact with the widget during chats with customers. The widget itself is displayed in the Agent’s App sidebar as you can see on pictures above.
