@@ -143,7 +143,7 @@ export default class Cans extends Component {
           <Typography className={css(styles.addText)}>Add new canned response</Typography>
         </ListItem>
         {this.getGroupName()}
-        <List className={css(styles.list)}>
+        <List className={css(this.props.groups.length < 2 ? styles.list : styles.listShort)}>
           {this.renderList()}
         </List>
 
@@ -167,31 +167,54 @@ export default class Cans extends Component {
 
 const styles = StyleSheet.create({
   create: {
-    backgroundColor: Colors.canMainColor, marginTop: '3%',
+    backgroundColor: Colors.canMainColor,
+    marginTop: '3%',
   },
   addIcon: {
-    color: 'white', fontSize: '240%',
+    color: 'white',
+    fontSize: '240%',
   },
   change: {
     color: Colors.canMainColor,
   },
   groupsItem: {
-    backgroundColor: '#F5F5F5', paddingTop: '2%', paddingBottom: '2%'
+    backgroundColor: '#F5F5F5',
+    paddingTop: '2%',
+    paddingBottom: '2%'
   },
   groupsText: {
-    color: '#888', fontSize: '110%', fontWeight: '400',
+    color: '#888',
+    fontSize: '110%',
+    fontWeight: '400',
   },
   addText: {
-    paddingLeft: '4%', flex: 1, color: 'white', fontSize: '120%',
+    paddingLeft: '4%',
+    flex: 1,
+    color: 'white',
+    fontSize: '120%',
   },
   list: {
-    position: 'absolute', width: '100%', height: '76%', overflow: 'scroll',
+    position: 'absolute',
+    width: '100%',
+    height: '76%',
+    overflow: 'scroll',
+  },
+  listShort: {
+    position: 'absolute',
+    width: '100%',
+    height: '69%',
+    overflow: 'scroll',
   },
   inputForm: {
-    position: 'absolute', bottom: 0,
+    position: 'absolute',
+    bottom: 0,
   },
   input: {
-    padding: '2%', paddingLeft: '5%', fontSize: '120%', fontWeight: '400', backgroundColor: '#F5F5F5',
+    padding: '2%',
+    paddingLeft: '5%',
+    fontSize: '120%',
+    fontWeight: '400',
+    backgroundColor: '#F5F5F5',
   },
 });
 

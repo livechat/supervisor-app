@@ -41,16 +41,14 @@ export default class GroupsDialog extends Component {
       <Dialog
         open={this.state.show}
         onClose={this.hideDialog}
-        aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">Change Group</DialogTitle>
-        <DialogContent style={{ width: '15em' }}>
+        <DialogContent>
           <RadioGroup
             ref={(node) => {
               this.radioGroup = node;
             }}
-            aria-label="ringtone"
-            name="ringtone"
+            style={{width: '100%'}}
             value={this.state.groupName}
             onChange={this.handleChange}
           >

@@ -37,14 +37,14 @@ export default class CanListItem extends Component {
 
   render() {
     return (
-      <Grid>
-        <ListItem button onClick={this.openInformation}>
+      <div>
+        <ListItem className={css(styles.wrapper)} button onClick={this.openInformation}>
           {this.state.showInfo ? <Icon className={css(styles.icon)}>info</Icon>
             : <Icon className={css(styles.icon)}>info_outline</Icon>}
-          <Grid style={{ flex: 1 }}>
+          <div className={css(styles.wrapper)}>
             <Typography className={css(styles.tags)}>{this.getTags()}</Typography>
             <Typography className={css(styles.desc)}>{this.state.item.text}</Typography>
-          </Grid>
+          </div>
           <Icon onClick={this.deleteCan} className={css(styles.remove)}>
             remove_circle_outline
           </Icon>
@@ -66,12 +66,16 @@ export default class CanListItem extends Component {
             </ListItem>
           </List>
         </Collapse>
-      </Grid>
+      </div>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  wrapper: {
+    width: '91%',
+    maxWidth: '91%',
+  },
   icon: {
     color: Colors.canMainColor,
     fontSize: '250%',
@@ -81,6 +85,8 @@ const styles = StyleSheet.create({
     color: '#333',
     paddingLeft: '4%',
     paddingRight: '4%',
+    wordWrap: 'break-word',
+    wordBreak: 'break-all',
     flex: 1,
     fontSize: '100%',
     fontWeight: '500',
@@ -88,8 +94,9 @@ const styles = StyleSheet.create({
   desc: {
     paddingLeft: '4%',
     paddingRight: '4%',
+    wordWrap: 'break-word',
+    wordBreak: 'break-all',
     flex: 1,
-    fontSize: '90%',
     fontWeight: '300',
     color: '#757575',
   },

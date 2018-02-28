@@ -154,31 +154,51 @@ export default class Tags extends Component {
 
 const styles = StyleSheet.create({
   addItem: {
-    backgroundColor: Colors.tagMainColor, marginTop: '3%',
+    backgroundColor: Colors.tagMainColor,
+    marginTop: '3%',
   },
   add: {
-    color: 'white', fontSize: '240%',
+    color: 'white',
+    fontSize: '240%',
   },
   addText: {
-    paddingLeft: '4%', flex: 1, color: 'white', fontSize: '120%',
+    paddingLeft: '4%',
+    flex: 1,
+    color: 'white',
+    fontSize: '120%',
   },
   groupsItem: {
-    backgroundColor: '#F5F5F5', paddingTop: '2%', paddingBottom: '2%'
+    backgroundColor: '#F5F5F5',
+    paddingTop: '2%',
+    paddingBottom: '2%'
   },
   groupsText: {
-    color: '#888', fontSize: '110%', fontWeight: '400',
+    color: '#888',
+    fontSize: '110%',
+    fontWeight: '400',
   },
   list: {
-    position: 'absolute', width: '100%', height: '76%', overflow: 'scroll',
+    position: 'absolute',
+    width: '100%',
+    height: '76%',
+    overflow: 'scroll',
   },
   listShort: {
-    position: 'absolute', width: '100%', height: '69%', overflow: 'scroll',
+    position: 'absolute',
+    width: '100%',
+    height: '69%',
+    overflow: 'scroll',
   },
   searchForm: {
-    position: 'absolute', bottom: 0,
+    position: 'absolute',
+    bottom: 0,
   },
   search: {
-    padding: '2%', paddingLeft: '5%', fontSize: '120%', fontWeight: '400', backgroundColor: '#F5F5F5',
+    padding: '2%',
+    paddingLeft: '5%',
+    fontSize: '120%',
+    fontWeight: '400',
+    backgroundColor: '#F5F5F5',
   },
 });
 
