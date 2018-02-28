@@ -1,0 +1,9 @@
+{
+  "2018-01-26": { "avg_response_time": { "count": 5, "seconds": 0.83} },
+  "2018-01-27": { "avg_response_time": { "count": 5, "seconds": 1.33} },
+  "2018-01-28": { "avg_response_time": { "count": 5, "seconds": 0.93} },
+  "2018-01-29": { "avg_response_time": { "count": 5, "seconds": 1.83} },
+  "2018-01-30": { "avg_response_time": { "count": 5, "seconds": 1.13} },
+  "2018-01-31": { "avg_response_time": { "count": 5, "seconds": 1.53} },
+  "2018-02-01": { "avg_response_time": { "count": 5, "seconds": 1.23} }
+}

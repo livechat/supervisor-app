@@ -3,13 +3,20 @@ import PropTypes from 'prop-types';
 import { Grid, AppBar, Tabs, Tab } from 'material-ui';
 import axios from 'axios/index';
 import Colors from '../../Colors';
+import Config from '../../../Config';
+import { Chart } from 'react-google-charts';
 
 export default class Chatting extends Component {
   state = {
     lastTabIndex: -1,
     currentTabIndex: 0,
     isDownloadingChatting: false,
+    chattingTimes: [],
   };
+
+  componentDidMount() {
+   this.downloadChatTimeFromServer();
+  }
 
   tabChanged = () => {
     this.setState({ lastTabIndex: this.state.currentTabIndex});
@@ -22,8 +29,7 @@ export default class Chatting extends Component {
   };
 
   extractChattingTimes = (data) => {
-    this.chattingTimes = data;
-    this.setState({ isDownloadingChatting: false });
+    this.setState({ isDownloadingChatting: false, chattingTimes: data });
   };
 
   updateChatTimes = (response) => {
@@ -42,7 +48,7 @@ export default class Chatting extends Component {
   downloadChatTimeFromServer = (tabId = 0) => {
     this.setState({ isDownloadingChatting: true, currentTabIndex: tabId, lastTabIndex: -1 });
 
-    axios.get(Colors.serverUrl + '/chatting', {
+    axios.get(Config.serverUrl + '/chatting', {
       headers: {
         "Authorization": 'Bearer ' + this.props.accessToken,
         "DateInterval": tabId,
@@ -53,24 +59,17 @@ export default class Chatting extends Component {
       .catch(this.errorWhenDownloading);
   };
 
-  onChartsReady = () => {
-    this.downloadChatTimeFromServer();
-  };
-
-  componentDidMount() {
-    window.google.charts.load('current', { 'packages': ['corechart'] });
-    window.google.charts.setOnLoadCallback(this.onChartsReady);
-  }
 
   createArraysOfData = (object, bar) => {
     const arrayOfData = [];
+
     if (bar) {
       arrayOfData.push(['Interval', 'Time', { role: 'style' }]);
       Object.keys(object).forEach((key) => {
         if (Number.isInteger(object[key].minutes)) {
-          arrayOfData.push([key , object[key].minutes, Colors.chattingMainColor]);
+          arrayOfData.push([key, object[key].minutes, Colors.chattingMainColor]);
         } else {
-          arrayOfData.push([key , object[key].hours, Colors.chattingMainColor]);
+          arrayOfData.push([key, object[key].hours, Colors.chattingMainColor]);
         }
       });
     } else {
@@ -86,66 +85,64 @@ export default class Chatting extends Component {
     return arrayOfData;
   };
 
-  drawCharts = () => {
-    const areaDataArray = this.createArraysOfData(this.chattingTimes);
-    const barDataArray = this.createArraysOfData(this.chattingTimes, 'bar');
-
-    this.areaData = window.google.visualization.arrayToDataTable(areaDataArray);
-    this.barData = window.google.visualization.arrayToDataTable(barDataArray);
-
-    this.areaOptions = {
-      title: this.state.currentTabIndex === 0 ? 'Chatting time: minutes / hour' : 'Chatting time: hours / day',
-      legend: { position: 'none' },
-      backgroundColor: { fill: '#F5F5F5', strokeWidth: window.innerWidth / 10, stroke: 'white' },
-      colors: [Colors.chattingMainColor],
-      chartArea: { width: '78%', left: window.innerWidth / 8 },
-      titleTextStyle: { color: '#555', fontSize: '13' },
-      vAxis: { minValue: 0 },
-      animation: { duration: 500, startup: true },
-    };
-
-    this.barOptions = {
-      title: this.state.currentTabIndex === 0 ? 'Chatting time: minutes / hour' : 'Chatting time: hours / day',
-      legend: { position: 'none' },
-      backgroundColor: { fill: '#F5F5F5', strokeWidth: window.innerWidth / 10, stroke: 'white' },
-      chartArea: this.state.currentTabIndex === 0 ? { width: '70%', left: window.innerWidth / 6 } : { width: '66%', left: (window.innerWidth * 4) / 17 },
-      titleTextStyle: { color: '#555', fontSize: '13' },
-      hAxis: { minValue: 0 },
-      animation: { duration: 500, startup: true },
-    };
-
-    this.areaChart = new window.google.visualization.AreaChart(document.getElementById('area-chart'));
-    this.barChart = new window.google.visualization.BarChart(document.getElementById('bar-chart'));
-
-    setTimeout(this.updateCharts);
-  };
-
-  updateCharts = () => {
-    this.areaChart.draw(this.areaData, this.areaOptions);
-    this.barChart.draw(this.barData, this.barOptions);
-  };
-
   render() {
-    if (this.state.lastTabIndex !== this.state.currentTabIndex) {
-      if(window.google.visualization && this.props.show && !this.state.isDownloadingChatting) this.drawCharts();
+    const areaDataArray = this.createArraysOfData(this.state.chattingTimes);
+    const barDataArray = this.createArraysOfData(this.state.chattingTimes, 'bar');
+
+    if(this.props.show) {
+      return (
+        <Grid style={{ display: this.props.show ? 'block' : 'none' }}>
+          <AppBar position="static" color="default">
+            <Tabs
+              value={this.state.currentTabIndex}
+              onChange={this.handleChange}
+              indicatorColor={Colors.chattingMainColorLight}
+            >
+              <Tab style={{ width: '33.33%' }} label="Day" />
+              <Tab style={{ width: '33.33%' }} label="Week" />
+              <Tab style={{ width: '33.33%' }} label="Month" />
+            </Tabs>
+          </AppBar>
+          {areaDataArray.length > 1 && <Chart
+            chartType="AreaChart"
+            data={areaDataArray}
+            options={{
+              title: this.state.currentTabIndex === 0 ? 'Chatting time: minutes / hour' : 'Chatting time: hours / day',
+              legend: { position: 'none' },
+              backgroundColor: { fill: '#F5F5F5', strokeWidth: 40, stroke: 'white' },
+              colors: [Colors.chattingMainColor],
+              chartArea: { width: '78%', left: '14%' },
+              titleTextStyle: { color: '#555', fontSize: '13' },
+              vAxis: { minValue: 0 },
+              animation: { duration: 500, startup: true },
+            }}
+            graph_id="AreaChartChatting"
+            width="100vw"
+            height="40vh"
+          />}
+          {barDataArray.length > 1 && <div style={{ marginTop: '-5%'}}>
+            <Chart
+              chartType="BarChart"
+              data={barDataArray}
+              ref={ref=>this.chart = ref}
+              width="100vw"
+              height="40vh"
+              options={{
+                title: this.state.currentTabIndex === 0 ? 'Chatting time: minutes / hour' : 'Chatting time: hours / day',
+                legend: { position: 'none' },
+                backgroundColor: { fill: '#F5F5F5', strokeWidth: 40, stroke: 'white' },
+                chartArea: this.state.currentTabIndex === 0 ? { width: '70%', left: '16%' } : { width: '66%', left: '22%' },
+                titleTextStyle: { color: '#555', fontSize: '13' },
+                hAxis: { minValue: 0 } ,
+                animation: { duration: 500, startup: true },
+              }}
+              graph_id="BarChartChatting"
+            />
+          </div>}
+        </Grid>
+      );
     }
-    return (
-      <Grid style={{ display: this.props.show ? 'block' : 'none' }}>
-        <AppBar position="static" color="default">
-          <Tabs
-            value={this.state.currentTabIndex}
-            onChange={this.handleChange}
-            indicatorColor={Colors.chattingMainColorLight}
-          >
-            <Tab style={{ width: '33.33%' }} label="Day" />
-            <Tab style={{ width: '33.33%' }} label="Week" />
-            <Tab style={{ width: '33.33%' }} label="Month" />
-          </Tabs>
-        </AppBar>
-        <div id="area-chart" style={{ height: (window.innerHeight * 2) / 5 }} />
-        <div id="bar-chart" style={{ height: (window.innerHeight * 2) / 5, marginTop: -window.innerHeight / 50 }} />
-      </Grid>
-    );
+    return null;
   }
 }
 

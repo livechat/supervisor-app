@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Grid, AppBar, Tabs, Tab } from 'material-ui';
 import axios from 'axios/index';
 import Colors from '../../Colors';
+import Config from '../../../Config';
+import { Chart } from 'react-google-charts';
 
 export default class Response extends Component {
   state = {
@@ -10,7 +12,12 @@ export default class Response extends Component {
     currentTabIndex: 0,
     isDownloadingResponses: false,
     canUseThisMethod: true,
+    responseTimes: [],
   };
+
+  componentDidMount() {
+    this.downloadResponsesFromServer();
+  }
 
   tabChanged = () => {
     this.setState({ lastTabIndex: this.state.currentTabIndex});
@@ -18,13 +25,12 @@ export default class Response extends Component {
 
   handleChange = (event, tabId) => {
     if (!this.state.isDownloadingResponses) {
-      this.updateResponseTimes(tabId);
+      this.downloadResponsesFromServer(tabId);
     }
   };
 
   extractReponseTimes = (data) => {
-    this.responseTimes = data;
-    this.setState({ isDownloadingResponses: false });
+    this.setState({ isDownloadingResponses: false, responseTimes: data });
   };
 
   updateResponseTimes = (response) => {
@@ -38,13 +44,13 @@ export default class Response extends Component {
 
   errorWhenDownloading = (error) => {
     this.setState({ isDownloadingResponses: false });
-    console.error(error);
+    console.error('error', error);
   };
 
   downloadResponsesFromServer = (tabId = 0) => {
     this.setState({ isDownloadingResponses: true, currentTabIndex: tabId, lastTabIndex: -1 });
 
-    axios.get(Colors.serverUrl + '/responses', {
+    axios.get(Config.serverUrl + '/responses', {
       headers: {
         "Authorization": 'Bearer ' + this.props.accessToken,
         "DateInterval": tabId,
@@ -55,94 +61,83 @@ export default class Response extends Component {
       .catch(this.errorWhenDownloading);
   };
 
-  onChartsReady = () => {
-    this.downloadResponsesFromServer();
-  };
-
-  componentDidMount() {
-    window.google.charts.load('current', { 'packages': ['corechart'] });
-    window.google.charts.setOnLoadCallback(this.onChartsReady);
-  }
-
   createArraysOfData = (object, bar) => {
     const arrayOfData = [];
     if (bar) {
       arrayOfData.push(['Interval', 'Time', { role: 'style' }]);
       Object.keys(object).forEach((key) => {
-        arrayOfData.push([key , object[key].avg_response_time.seconds, Colors.responseMainColor]);
+        arrayOfData.push([key , object[key].first_response_time.seconds || 0, Colors.responseMainColor]);
       });
     } else {
       arrayOfData.push(['Interval', 'Time']);
       Object.keys(object).forEach((key) => {
-        arrayOfData.push([key, object[key].avg_response_time.seconds]);
+        arrayOfData.push([key, object[key].first_response_time.seconds || 0]);
       });
     }
     return arrayOfData;
-  };
-
-  drawCharts = () => {
-    const areaDataArray = this.createArraysOfData(this.responseTimes);
-    const barDataArray = this.createArraysOfData(this.responseTimes, 'bar');
-
-    this.areaData = window.google.visualization.arrayToDataTable(areaDataArray);
-    this.barData = window.google.visualization.arrayToDataTable(barDataArray);
-
-    this.areaOptions = {
-      title: 'Average response time (in seconds)',
-      legend: { position: 'none' },
-      backgroundColor: { fill: '#F5F5F5', strokeWidth: window.innerWidth / 10, stroke: 'white' },
-      colors:[Colors.responseMainColor],
-      chartArea: { width: '78%', left: window.innerWidth / 8 },
-      titleTextStyle: { color: '#555', fontSize: '13' },
-      vAxis: { minValue: 0 },
-      animation: { duration: 500, startup: true },
-    };
-
-    this.barOptions = {
-      title: 'Average response time (in seconds)',
-      legend: { position: 'none' },
-      backgroundColor: { fill: '#F5F5F5', strokeWidth: window.innerWidth / 10, stroke: 'white' },
-      chartArea: this.state.currentTabIndex === 0 ? { width: '70%', left: window.innerWidth / 6 } : { width: '66%', left: (window.innerWidth * 4) / 17 },
-      titleTextStyle: { color: '#555', fontSize: '13' },
-      hAxis: { minValue: 0 },
-      animation: { duration: 500, startup: true },
-    };
-
-    this.areaChart = new window.google.visualization.LineChart(document.getElementById('area-chart-response'));
-    this.barChart = new window.google.visualization.BarChart(document.getElementById('bar-chart-response'));
-
-    setTimeout(this.updateCharts);
-  };
-
-  updateCharts = () => {
-    this.areaChart.draw(this.areaData, this.areaOptions);
-    this.barChart.draw(this.barData, this.barOptions);
   };
 
   render() {
     if (!this.state.canUseThisMethod) {
       return <h4 style={headerStyle}>This method is allowed only for the following plans: enterpriseplus, enterprise, basic, premium, pro.</h4>;
     }
-    if (this.state.lastTabIndex !== this.state.currentTabIndex) {
-      if (window.google.visualization && this.props.show && !this.state.isDownloadingChatting) this.drawCharts();
+
+    const areaDataArray = this.createArraysOfData(this.state.responseTimes);
+    const barDataArray = this.createArraysOfData(this.state.responseTimes, 'bar');
+
+    if(this.props.show) {
+      return (
+        <Grid style={{ display: this.props.show ? 'block' : 'none' }}>
+          <AppBar position="static" color="default">
+            <Tabs
+              value={this.state.currentTabIndex}
+              onChange={this.handleChange}
+              indicatorColor={Colors.responseMainColorLight}
+            >
+              <Tab style={{ width: '33.33%' }} label="Day" />
+              <Tab style={{ width: '33.33%' }} label="Week" />
+              <Tab style={{ width: '33.33%' }} label="Month" />
+            </Tabs>
+          </AppBar>
+          {areaDataArray.length > 1 && <Chart
+            chartType="AreaChart"
+            data={areaDataArray}
+            options={{
+              title: 'Average response time (in seconds)',
+              legend: { position: 'none' },
+              backgroundColor: { fill: '#F5F5F5', strokeWidth: 40, stroke: 'white' },
+              colors:[Colors.responseMainColor],
+              chartArea: { width: '78%', left: '14%' },
+              titleTextStyle: { color: '#555', fontSize: '13' },
+              vAxis: { minValue: 0 },
+              animation: { duration: 500, startup: true },
+            }}
+            graph_id="AreaChartResponse"
+            width="100vw"
+            height="40vh"
+          />}
+          {barDataArray.length > 1 && <div style={{ marginTop: '-5%'}}>
+            <Chart
+              chartType="BarChart"
+              data={barDataArray}
+              options={{
+                title: 'Average response time (in seconds)',
+                legend: { position: 'none' },
+                backgroundColor: { fill: '#F5F5F5', strokeWidth: 40, stroke: 'white' },
+                chartArea: this.state.currentTabIndex === 0 ? { width: '70%', left: '16%' } : { width: '66%', left: '22%' },
+                titleTextStyle: { color: '#555', fontSize: '13' },
+                hAxis: { minValue: 0 },
+                animation: { duration: 500, startup: true },
+              }}
+              graph_id="BarChartResponse"
+              width="100vw"
+              height="40vh"
+            />
+          </div>}
+        </Grid>
+      );
     }
-    return (
-      <Grid style={{ display: this.props.show ? 'block' : 'none' }}>
-        <AppBar position="static" color="default">
-          <Tabs
-            value={this.state.currentTabIndex}
-            onChange={this.handleChange}
-            indicatorColor={Colors.responseMainColorLight}
-          >
-            <Tab style={{ width: '33.33%' }} label="Day" />
-            <Tab style={{ width: '33.33%' }} label="Week" />
-            <Tab style={{ width: '33.33%' }} label="Month" />
-          </Tabs>
-        </AppBar>
-        <div id="area-chart-response" style={{ height: (window.innerHeight * 2) / 5 }} />
-        <div id="bar-chart-response" style={{ height: (window.innerHeight * 2) / 5, marginTop: (-window.innerHeight / 50) }} />
-      </Grid>
-    );
+    return null;
   }
 }
 

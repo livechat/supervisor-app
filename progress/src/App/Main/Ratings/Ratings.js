@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Grid, AppBar, Tabs, Tab } from 'material-ui';
 import axios from 'axios';
 import Colors from '../Colors';
+import Config from '../../Config';
+import { Chart } from 'react-google-charts';
 
 const timeIntervals = ['day', 'week', 'month', 'quarter', 'year'];
 
@@ -11,7 +13,14 @@ export default class Ratings extends Component{
     lastTabIndex: -1,
     currentTabIndex : 0,
     isDownloadingRatings: false,
+    good: 0,
+    bad: 0,
+    chats: 0,
   };
+
+  componentDidMount() {
+    this.downloadRatingsFromServer();
+  }
 
   tabChanged = (value) => {
     if (value === 1) this.setState({ lastTabIndex: this.state.currentTabIndex });
@@ -33,7 +42,7 @@ export default class Ratings extends Component{
   downloadRatingsFromServer = (tabId = 0) => {
     this.setState({isDownloadingRatings: true, currentTabIndex: tabId, lastTabIndex: -1});
 
-    axios.get(Colors.serverUrl + '/ratings/' + timeIntervals[tabId],{
+    axios.get(Config.serverUrl + '/ratings/' + timeIntervals[tabId],{
       headers: {
         "Authorization": 'Bearer ' + this.props.accessToken,
         "X-API-Version": '2',
@@ -47,75 +56,23 @@ export default class Ratings extends Component{
     this.downloadRatingsFromServer();
   };
 
-  componentDidMount() {
-    window.google.charts.load('current', { 'packages': ['corechart'] });
-    window.google.charts.setOnLoadCallback(this.onChartsReady);
-  }
-
   handleChange = (event, tabId) => {
     if (!this.state.isDownloadingRatings) {
       this.downloadRatingsFromServer(tabId);
     }
   };
 
-  getChatRatings = (child) => {
-    this.good += child.good;
-    this.bad += child.bad;
-    this.chats += child.chats;
-  };
-
-  drawCharts = () => {
-    this.pieData = window.google.visualization.arrayToDataTable([
-      ['Pie', 'Pie'],
-      ['Good', this.good !== 0 ? this.good : 1],
-      ['Bad', this.bad !== 0 ? this.bad : 1],
-    ]);
-
-    this.pieOptions = {
-      title: 'Good / Bad Ratio',
-      colors: ['#43A047', '#F44336'],
-      backgroundColor: { fill: '#F5F5F5', strokeWidth: window.innerWidth / 10, stroke: 'white' },
-      chartArea: { left: window.innerWidth / 4, top: window.innerHeight / 11 },
-      titleTextStyle: { color: '#555', fontSize: '13' },
-      enableInteractivity: !(this.bad === 0 && this.good === 0),
-    };
-
-    this.columnData = window.google.visualization.arrayToDataTable([
-      ['Column', 'Column', { role: 'style' }],
-      ['Total', this.chats, '#2196F3'],
-      ['Good', this.good, '#43A047'],
-      ['Bad', this.bad, '#F44336'],
-    ]);
-
-    this.columnOptions = {
-      title: 'Chats summary',
-      legend: { position: 'none' },
-      backgroundColor: { fill: '#F5F5F5', strokeWidth: window.innerWidth / 10, stroke: 'white' },
-      chartArea: { top: window.innerHeight / 9, height: '60%' },
-      animation: { duration: 500, startup: true },
-      titleTextStyle: { color: '#555', fontSize: '13' },
-    };
-
-    this.pieChart = new window.google.visualization.PieChart(document.getElementById('pie-chart'));
-    this.columnChart = new window.google.visualization.ColumnChart(document.getElementById("column-chart"));
-    setTimeout(this.updateCharts);
-  };
-
-  updateCharts = () => {
-    this.pieChart.draw(this.pieData, this.pieOptions);
-    this.columnChart.draw(this.columnData, this.columnOptions);
-  };
-
   extractRatingsInfo = (data) => {
-    this.good = this.bad = this.chats = 0;
-    Object.keys(data).forEach((key) => { this.getChatRatings(data[key]) });
-    this.setState({isDownloadingRatings: false});
+    let good = 0, bad = 0, chats = 0;
+    Object.keys(data).forEach((key) => {
+      good += data[key].good;
+      bad += data[key].bad;
+      chats += data[key].chats;
+    });
+    this.setState({ isDownloadingRatings: false, good, bad, chats });
   };
 
   render() {
-    if (this.state.lastTabIndex !== this.state.currentTabIndex) {
-      if (window.google.visualization && this.props.show && !this.state.isDownloadingRatings) this.drawCharts();
-    }
     return(
       <Grid style={{ display: this.props.show ? 'block' : 'none' }}>
         <AppBar position="static" color="default">
@@ -131,8 +88,46 @@ export default class Ratings extends Component{
             <Tab style={{ width: '20%' }} label="Year" />
           </Tabs>
         </AppBar>
-        <div id="pie-chart" style={{ height: (window.innerHeight * 2) / 5 }} />
-        <div id="column-chart" style={{ height: window.innerHeight / 2, marginTop: -window.innerHeight / 20 }} />
+        <Chart
+          chartType="PieChart"
+          data={[
+            ['Pie', 'Pie'],
+            ['Good', this.state.good],
+            ['Bad', this.state.bad],
+          ]}
+          options={{
+            title: 'Good / Bad Ratio',
+            colors: ['#43A047', '#F44336'],
+            backgroundColor: { fill: '#F5F5F5', strokeWidth: 40, stroke: 'white' },
+            chartArea: { left: '25%', top: '20%' , height: '70%', width: '80%' },
+            titleTextStyle: { color: '#555', fontSize: '13' },
+            enableInteractivity: !(this.bad === 0 && this.good === 0),
+          }}
+          graph_id="PieChart"
+          legend_toggle
+          width="100vw"
+          height="35vh"
+        />
+        <Chart
+          chartType="ColumnChart"
+          data={[
+            ['Column', 'Column', { role: 'style' }],
+            ['Total', this.state.chats, '#2196F3'],
+            ['Good', this.state.good, '#43A047'],
+            ['Bad', this.state.bad, '#F44336'],
+          ]}
+          options={{
+            title: 'Chats summary',
+            legend: { position: 'none' },
+            backgroundColor: { fill: '#F5F5F5', strokeWidth: 40, stroke: 'white' },
+            chartArea: { top: '20%', height: '60%', width: '72%', left: '16%' },
+            animation: { duration: 500, startup: true },
+            titleTextStyle: { color: '#555', fontSize: '13' },
+          }}
+          graph_id="ColumnChart"
+          width="100vw"
+          height="50vh"
+        />
       </Grid>
     );
   }
