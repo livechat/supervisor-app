@@ -109,9 +109,9 @@ export default class Chatting extends Component {
             options={{
               title: this.state.currentTabIndex === 0 ? 'Chatting time: minutes / hour' : 'Chatting time: hours / day',
               legend: { position: 'none' },
-              backgroundColor: { fill: '#F5F5F5', strokeWidth: 40, stroke: 'white' },
+              backgroundColor: { fill: '#F5F5F5', strokeWidth: 20, stroke: 'white' },
               colors: [Colors.chattingMainColor],
-              chartArea: { width: '78%', left: '14%' },
+              chartArea: { width: '82%', left: '11%' },
               titleTextStyle: { color: '#555', fontSize: '13' },
               vAxis: { minValue: 0 },
               animation: { duration: 500, startup: true },
@@ -120,7 +120,7 @@ export default class Chatting extends Component {
             width="100vw"
             height="40vh"
           />}
-          {barDataArray.length > 1 && <div style={{ marginTop: '-5%'}}>
+          {barDataArray.length > 1 && <div style={{ marginTop: '-2%'}}>
             <Chart
               chartType="BarChart"
               data={barDataArray}
@@ -130,8 +130,8 @@ export default class Chatting extends Component {
               options={{
                 title: this.state.currentTabIndex === 0 ? 'Chatting time: minutes / hour' : 'Chatting time: hours / day',
                 legend: { position: 'none' },
-                backgroundColor: { fill: '#F5F5F5', strokeWidth: 40, stroke: 'white' },
-                chartArea: this.state.currentTabIndex === 0 ? { width: '70%', left: '16%' } : { width: '66%', left: '22%' },
+                backgroundColor: { fill: '#F5F5F5', strokeWidth: 20, stroke: 'white' },
+                chartArea: this.state.currentTabIndex === 0 ? { width: '70%', left: '16%' } : { width: '70%', left: '22%' },
                 titleTextStyle: { color: '#555', fontSize: '13' },
                 hAxis: { minValue: 0 } ,
                 animation: { duration: 500, startup: true },
