@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { StyleSheet, css } from 'aphrodite';
-import { Icon, ListItem, Typography, Collapse, List, ListItemText, Grid } from 'material-ui';
+import { Icon, ListItem, Typography, Collapse, List, ListItemText } from 'material-ui';
 import Colors from '../Colors';
 
 export default class CanListItem extends Component {
@@ -14,7 +14,10 @@ export default class CanListItem extends Component {
       date: null,
     };
 
-    const time = this.state.item.creation_date ? new Date(this.state.item.creation_date * 1000) : new Date(this.state.item.modification_date * 1000);
+    const time = this.state.item.creation_date
+      ? new Date(this.state.item.creation_date * 1000)
+      : new Date(this.state.item.modification_date * 1000);
+
     this.state.date = time.getFullYear() + '/' + (time.getMonth() + 1) + '/' + time.getDate();
   }
 

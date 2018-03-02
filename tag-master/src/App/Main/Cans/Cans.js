@@ -196,13 +196,13 @@ const styles = StyleSheet.create({
   list: {
     position: 'absolute',
     width: '100%',
-    height: '76%',
+    height: '78%',
     overflow: 'scroll',
   },
   listShort: {
     position: 'absolute',
     width: '100%',
-    height: '69%',
+    height: '72%',
     overflow: 'scroll',
   },
   inputForm: {

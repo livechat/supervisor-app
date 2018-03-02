@@ -1,17 +1,17 @@
 let config;
 if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  // dev code
+  // development
   config = {
-    app_client_id: '66dcaec190a03f9b8f0af165ba23f93d',
+    app_client_id: 'c4603a8a3489cb2291a8d3825c4c43e6',
     api_url: "https://accounts.livechatinc.com/",
-    server_url: 'https://us-central1-livechat-experiments.cloudfunctions.net/restApi',
+    serverUrl: 'https://us-central1-livechat-experiments.cloudfunctions.net/restApi',
   }
 } else {
-  // production code
+  // production
   config = {
-    app_client_id: '66dcaec190a03f9b8f0af165ba23f93d',
+    app_client_id: 'c4603a8a3489cb2291a8d3825c4c43e6',
     api_url: "https://accounts.livechatinc.com/",
-    server_url: 'https://us-central1-livechat-experiments.cloudfunctions.net/restApi',
+    serverUrl: 'https://us-central1-livechat-experiments.cloudfunctions.net/restApi',
   }
 }
 
