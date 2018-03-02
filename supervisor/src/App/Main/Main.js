@@ -20,7 +20,7 @@ export default class Main extends Component {
 
   componentDidMount(){
     this.downloadAgents();
-    this.downloadAgentsInterval = setInterval(this.downloadAgents, 60 * 1000);
+    this.downloadAgentsInterval = setInterval(this.downloadAgents, 60 * 5 * 1000);
   }
 
   componentWillUnmount() {

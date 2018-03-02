@@ -44,11 +44,11 @@ export default class WorkingHours extends Component {
           options={{
             title: 'Availability time: hours / day',
             legend: { position: 'none' },
-            backgroundColor: { fill: '#F5F5F5', strokeWidth: 40, stroke: 'white' },
+            backgroundColor: { fill: '#F5F5F5', strokeWidth: 20, stroke: 'white' },
             colors: ['#2196F3'],
-            chartArea: { width: '75%', left: '15%' },
+            chartArea: { width: '80%', left: '12%' },
             titleTextStyle: { color: '#555', fontSize: '13' },
-            vAxis: { minValue: 0 },
+            vAxis: { viewWindow: {min: 0} },
             animation: { duration: 500, startup: true },
           }}
           graph_id="AreaChart"
@@ -84,7 +84,7 @@ WorkingHours.defaultTypes = {
 const styles = StyleSheet.create({
   container: {
     width:'100%',
-    marginLeft: '-2vw'
+    marginLeft: '-1vw'
   },
   textContainer: {
     display: 'flex',
@@ -92,23 +92,26 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     paddingTop: '1vh',
     paddingBottom: '1vh',
-    margin: '2vw',
-    marginLeft: '4vw',
+    marginTop: '1vh',
+    marginBottom: '1vh',
+    marginLeft: '2vw',
   },
   title: {
     backgroundColor: '#F5F5F5',
-    padding: '1vh 3vw 1vh',
-    margin: '2vw',
-    marginLeft: '4vw',
     color: '#555',
     fontWeight: '600',
+    paddingTop: '1vh',
+    paddingBottom: '1vh',
+    marginTop: '1vh',
+    marginBottom: '1vh',
+    marginLeft: '2vw',
   },
   name: {
     color: '#777',
     flex: 1,
     textAlign: 'center',
     fontWeight: '600',
-    paddingLeft: '8vw',
+    paddingLeft: '12vw',
   },
   value: {
     color: '#777',
@@ -118,7 +121,8 @@ const styles = StyleSheet.create({
     paddingRight: '6vw',
   },
   chattingTime: {
-    color:'#2196F3'
+    color:'#2196F3',
+    paddingLeft: '5vw',
   },
   average: {
     color: '#2196F3',

@@ -28,13 +28,13 @@ export default class AgentRow extends Component {
     return (
       <div className={css(this.state.showOptions ? styles.containerSelected : styles.container)}>
         <ListItem onClick={this.onAgentSelected} className={css(styles.item)}>
-          <img className={css(styles.avatar)} src={'http://' + agent.avatar} alt="" />
+          <img className={css(styles.avatar)} src={'https://' + agent.avatar} alt="" />
           <div className={css(styles.leftContainer)}>
             <p className={css(styles.name)}>{agent.name}</p>
             <p className={css(styles.login)}>{agent.login}</p>
           </div>
           <div className={css(styles.rightContainer)}>
-            <p className={css(permissionTypes[permission].style)}>{permission.toUpperCase()}</p>
+            <p className={css(permissionTypes[permission].style)}>{permission.charAt(0).toUpperCase() + permission.slice(1)}</p>
             <p className={css(agent.status === 'accepting chats' ? styles.online : styles.offline)}>
               {agent.status === 'accepting chats' ? 'online' : 'offline'}
             </p>

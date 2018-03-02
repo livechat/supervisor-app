@@ -21,13 +21,14 @@ export default class ChatRatings extends Component {
           data={columnData}
           options={{
             legend: { position: 'none' },
-            backgroundColor: { fill: '#F5F5F5', strokeWidth: 40, stroke: 'white' },
-            chartArea: { left:'15%', width: '73%', height: '64%' },
+            backgroundColor: { fill: '#F5F5F5', strokeWidth: 20, stroke: 'white' },
+            chartArea: { left:'12%', width: '80%', height: '64%' },
             animation: { duration: 500, startup: true },
+            vAxis: { viewWindow: {min: 0} },
             titleTextStyle: { color: '#555', fontSize: '13' },
           }}
           graph_id="ColumnChart"
-          width="85vw"
+          width="84vw"
           height="40vh"
           legend_toggle
         />}
@@ -68,23 +69,26 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5F5F5',
     paddingTop: '1vh',
     paddingBottom: '1vh',
-    margin: '2vw',
-    marginLeft: '4vw',
+    marginTop: '1vh',
+    marginBottom: '1vh',
+    marginLeft: '2vw',
   },
   title: {
     backgroundColor: '#F5F5F5',
-    padding: '1vh 3vw 1vh',
-    margin: '2vw',
-    marginLeft: '4vw',
     color: '#555',
     fontWeight: '600',
+    paddingTop: '1vh',
+    paddingBottom: '1vh',
+    marginTop: '1vh',
+    marginBottom: '1vh',
+    marginLeft: '2vw',
   },
   name: {
     color: '#777',
     flex: 1,
     textAlign: 'center',
     fontWeight: '600',
-    paddingLeft: '8vw',
+    paddingLeft: '12vw',
   },
   value: {
     color: '#777',
@@ -95,6 +99,7 @@ const styles = StyleSheet.create({
   },
   chattingTime: {
     color:'#9C27B0',
+    paddingLeft: '5vw',
   },
   average: {
     color: '#2196F3',
