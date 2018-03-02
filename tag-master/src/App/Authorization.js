@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Main from './Main/Main';
 import LiveChat from '@livechat/agent-app-widget-sdk';
+import Main from './Main/Main';
 import Config from './Config';
 
 export default class Authorization extends Component {
