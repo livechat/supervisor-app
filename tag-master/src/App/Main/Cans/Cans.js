@@ -9,6 +9,7 @@ import axios from "axios/index";
 import GroupsDialog from '../GroupsDialog/GroupsDialog';
 import Colors from '../Colors';
 import Config from '../../Config';
+import EditCanDialog from "./EditCanDialog";
 
 export default class Cans extends Component {
 
@@ -41,10 +42,29 @@ export default class Cans extends Component {
     this.deleteDialog.changeDialogState(tags, id, group);
   };
 
+  showEditCanDialog = (tags, description, id) => {
+    this.editDialog.changeDialogState(tags, description, id);
+  };
+
   addCanAndRefresh = (response) => {
     if (response.data.text) {
       this.props.reload(this.currentGroupId);
     }
+  };
+
+  editCan = (tags, description, id) => {
+    axios.put(Config.serverUrl + '/cans', {
+      data: {
+        token: this.props.accessToken,
+        tags: tags.substring(1).split('#'),
+        text: description,
+        id,
+      },
+    })
+      .then(this.addCanAndRefresh)
+      .catch(function (error) {
+        console.error(error);
+      });
   };
 
   createCan = (name, description, groupId) => {
@@ -88,12 +108,14 @@ export default class Cans extends Component {
         if (this.currentGroupId === 0) {
           listOfItems.push(<CanListItem
             delete={this.showDeleteCanDialog}
+            edit={this.showEditCanDialog}
             key={Math.random()}
             item={item}
           />);
         } else if (item.group === this.currentGroupId) {
           listOfItems.push(<CanListItem
             delete={this.showDeleteCanDialog}
+            edit={this.showEditCanDialog}
             key={Math.random()}
             item={item}
           />);
@@ -160,6 +182,7 @@ export default class Cans extends Component {
         <CreateCanDialog create={this.createCan} groups={this.props.groups} ref={(ref) => { this.createDialog = ref; }} />
         <DeleteCanDialog delete={this.deleteCan} ref={(ref) => { this.deleteDialog = ref; }} />
         <GroupsDialog change={this.changeGroup} ref={(ref) => { this.groupsDialog = ref; }} groups={this.props.groups}/>
+        <EditCanDialog edit={this.editCan} ref={(ref) => { this.editDialog = ref; }}/>
       </Grid>
     );
   }

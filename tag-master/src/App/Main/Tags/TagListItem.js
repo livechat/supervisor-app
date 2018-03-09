@@ -90,16 +90,25 @@ export default class TagListItem extends Component {
 
 const styles = StyleSheet.create({
   info: {
-    color: Colors.tagMainColor, fontSize: '250%',
+    color: Colors.tagMainColor,
+    fontSize: '250%',
   },
   name: {
-    color: '#444', marginLeft: '3%', flex: 1, fontSize: '96%', fontWeight: '500',
+    color: '#444',
+    marginLeft: '3%',
+    flex: 1,
+    fontSize: '96%',
+    fontWeight: '500',
   },
   count: {
-    fontSize: '80%', fontWeight: '300', color: '#757575', marginRight: '2%',
+    fontSize: '80%',
+    fontWeight: '300',
+    color: '#757575',
+    marginRight: '2%',
   },
   remove: {
-    color: '#F44336', fontSize: '250%',
+    color: '#F44336',
+    fontSize: '250%',
   },
 });
 

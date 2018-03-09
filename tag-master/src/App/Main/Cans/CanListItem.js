@@ -38,6 +38,11 @@ export default class CanListItem extends Component {
     this.props.delete(this.state.item.tags, this.state.item.id);
   };
 
+  editCan = (e) => {
+    e.stopPropagation();
+    this.props.edit(this.state.item.tags, this.state.item.text, this.state.item.id);
+  };
+
   render() {
     return (
       <div>
@@ -48,9 +53,14 @@ export default class CanListItem extends Component {
             <Typography className={css(styles.tags)}>{this.getTags()}</Typography>
             <Typography className={css(styles.desc)}>{this.state.item.text}</Typography>
           </div>
-          <Icon onClick={this.deleteCan} className={css(styles.remove)}>
-            remove_circle_outline
-          </Icon>
+          <div style={{alignSelf: 'flex-start', flex:0 }}>
+            <Icon onClick={this.editCan} className={css(styles.edit)}>
+              mode_edit
+            </Icon>
+            <Icon onClick={this.deleteCan} className={css(styles.remove)}>
+              remove_circle_outline
+            </Icon>
+          </div>
         </ListItem>
         <Collapse component="li" in={this.state.showInfo} timeout="auto" unmountOnExit>
           <List>
@@ -74,10 +84,17 @@ export default class CanListItem extends Component {
   }
 }
 
+CanListItem.propTypes = {
+  item: PropTypes.object.isRequired, //eslint-disable-line
+  edit: PropTypes.func.isRequired,
+  delete: PropTypes.func.isRequired,
+};
+
 const styles = StyleSheet.create({
   wrapper: {
     width: '91%',
     maxWidth: '91%',
+    alignSelf: 'flex-start',
   },
   icon: {
     color: Colors.canMainColor,
@@ -103,14 +120,17 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     color: '#757575',
   },
+  edit: {
+    color: '#4CAF50',
+    fontSize: '130%',
+    borderRadius: '50%',
+    padding: '1vw',
+    border: '3px solid #4CAF50',
+    marginBottom: '1vh',
+    marginLeft: '0.5vw',
+  },
   remove: {
     color: '#F44336',
     fontSize: '250%',
-    alignSelf: 'flex-start',
   },
 });
-
-CanListItem.propTypes = {
-  item: PropTypes.object.isRequired, //eslint-disable-line
-  delete: PropTypes.func.isRequired,
-};
