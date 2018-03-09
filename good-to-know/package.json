@@ -1,0 +1,30 @@
+{
+  "name": "good-to-know",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@livechat/agent-app-widget-sdk": "^1.3.0",
+    "aphrodite": "^1.2.5",
+    "material-ui": "^1.0.0-beta.27",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-google-charts": "^1.5.5",
+    "react-scripts": "1.0.17",
+    "axios": "^0.18.0",
+    "prop-types": "15.6.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.1",
+    "eslint": "^4.15.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.5.1"
+  }
+}
