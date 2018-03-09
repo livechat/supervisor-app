@@ -7,6 +7,7 @@ Current list of samples apps:
 - [Tag Master](https://github.com/livechat/sample-apps/tree/master/tag-master) - widget for helping your agents with managing tags and canned responses.
 - [Progress](https://github.com/livechat/sample-apps/tree/master/progress) - widget for helping you monitoring statistics of your team, such as: chat ratings, response times and chatting times.
 - [Supervisor](https://github.com/livechat/sample-apps/tree/master/supervisor) - widget for helping you to monitor weekly progress of your agents and also their availability.
+- [Good To Know](https://github.com/livechat/sample-apps/tree/master/good-to-know) - widget for displaying basic information about visitors on your page.
 
 In source code you can find code for **Authorization** and **data fetching** from our server.
 
