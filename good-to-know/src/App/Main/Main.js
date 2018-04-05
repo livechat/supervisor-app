@@ -26,12 +26,13 @@ export default class Main extends Component {
   };
 
   componentDidMount(){
-    this.getVisitors(this.props.accessToken)
-      .then(data => this.setState({ visitors: data }))
-      .catch(error => console.error(error));
-
     this.getBrowsingCount(this.props.accessToken)
-      .then(data => this.setState({ browsingCount: data.visitors_count}))
+      .then(data => {
+        this.getVisitors(this.props.accessToken, data.visitors_count)
+          .then(data => this.setState({ visitors: data }))
+          .catch(error => console.error(error));
+        this.setState({ browsingCount: data.visitors_count})
+      })
       .catch(error => console.error(error));
   }
 
@@ -56,9 +57,10 @@ export default class Main extends Component {
     })
   };
 
-  getVisitors = (accessToken) => {
+  getVisitors = (accessToken, count) => {
+    const path = count > 100 ? '/visitors' : '/visitors/all';
     return new Promise((resolve, reject) => {
-      axios.get(Config.server_url + '/visitors', {
+      axios.get(Config.server_url + path, {
         headers: {
           'Authorization': 'Bearer ' + accessToken,
           'X-API-Version': '2',
