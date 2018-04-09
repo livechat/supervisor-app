@@ -34,18 +34,6 @@
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
-    <script>
-      //
-      window.LiveChat.init({
-        authorize: false
-      });
-
-      if(!window.location.hash.substr(14).split('&')[0]){
-        window.location.href = 'https://accounts.livechatinc.com/?response_type=token&client_id=23928dbd7f7f331205ef5c187c4e6428&redirect_uri=' + window.location.href;
-      }else{
-        window.access_token = window.location.hash.substr(14).split('&')[0];
-      }
-    </script>
     <div id="root"></div>
   </body>
 </html>
