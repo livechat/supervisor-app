@@ -18,7 +18,7 @@ npm i -s livechat-bug-report
 
 render() {  
   return (
-	<BugReport license={your_livechat_license_id}/>
+    <BugReport license={your_livechat_license_id}/>
   )
 }
 ```
