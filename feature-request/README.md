@@ -18,7 +18,7 @@ npm i -s livechat-feature-request
 
 render() {  
   return (
-	  <FeatureRequest license={your_livechat_license_id}/>
+     <FeatureRequest license={your_livechat_license_id}/>
   )
 }
 ```
@@ -26,7 +26,9 @@ render() {
 ### How it works
 
 Widget is simply taking all input data from your client and send it in form of ticket.
-Below showing code of how we can use `livechat-visitor-sdk` to send tickets.
+
+Code below shows how we can use `livechat-visitor-sdk` to send tickets.
+
 ```js
 import * as LivechatVisitorSDK from '@livechat/livechat-visitor-sdk';
 
