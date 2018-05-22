@@ -1,6 +1,7 @@
 ﻿### Widget SDK
 
 Main idea:
+
 ![Idea](https://raw.githubusercontent.com/livechat/sample-apps/master/widget-sdk/widget-sdk-idea.png)
 
 Basic flow:
