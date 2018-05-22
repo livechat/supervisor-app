@@ -1,10 +1,10 @@
-﻿### Widget SDK
+﻿# Widget SDK
 
-Main idea:
+### Main idea:
 
 ![Idea](https://raw.githubusercontent.com/livechat/sample-apps/master/widget-sdk/widget-sdk-idea.png)
 
-Basic flow:
+### Basic flow:
 
 ```js
 import LiveChat from 'livechat-widget-sdk';
