@@ -31,3 +31,5 @@ You can get `401` HTTP error.
 ```js
 error: 'insufficient scope for this resource'
 ```
+
+![Scopes](https://raw.githubusercontent.com/livechat/sample-apps/master/widget-sdk/scopes.png)
