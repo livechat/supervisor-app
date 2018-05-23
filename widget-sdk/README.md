@@ -21,3 +21,13 @@ LiveChat.getAccessToken();
 LiveChat.getAllAgents();
 
 ```
+
+### Scopes problem
+
+Make sure to check scopes you need for your applicaton in **Developers Console**.
+
+You can get `401` HTTP error.
+
+```js
+error: 'insufficient scope for this resource'
+```
