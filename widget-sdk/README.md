@@ -37,9 +37,9 @@ LiveChat.getAllAgents(accessToken)
 ```
 
 ### Documents to read before start
-[LiveChat Rest API](https://docs.livechatinc.com/rest-api/), 
+[LiveChat Rest API](https://docs.livechatinc.com/rest-api/)
 
-[Agent App  Widgets](https://docs.livechatinc.com/agent-app-widgets/),
+[Agent App  Widgets](https://docs.livechatinc.com/agent-app-widgets/)
 
 [Authorization](https://docs.livechatinc.com/authorization/)
 
