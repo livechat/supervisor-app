@@ -38,7 +38,9 @@ LiveChat.getAllAgents(accessToken)
 
 ### Documents to read before start
 [LiveChat Rest API](https://docs.livechatinc.com/rest-api/), 
+
 [Agent App  Widgets](https://docs.livechatinc.com/agent-app-widgets/),
+
 [Authorization](https://docs.livechatinc.com/authorization/)
 
 ### Getting `access_token`
@@ -64,7 +66,8 @@ LiveChat.getAccessToken()
 #### REST methods
 You can use all REST methods like seen in [docs](https://docs.livechatinc.com/rest-api/).
 
-**Examples:**
+Examples:
+
 ```js
 // getting list of all agents
 LiveChat.getAllAgents(this.state.accessToken)  
@@ -109,7 +112,7 @@ LiveChat.getChatsRating(this.state.accessToken, {
 
 
 
-### Init and receive customer profile
+### Receive user profile
 You can get **current user data** by setting `customer_profile` listener:
 
 ```js
