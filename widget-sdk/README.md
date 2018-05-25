@@ -20,7 +20,8 @@ Using cdn:
 
 ```js
 import LiveChat from 'livechat-widget-sdk';
-// if installed using cdn use:
+
+// if installed using cdn:
 var LiveChat = window.widgetSDK;
 
 // Agent app part
