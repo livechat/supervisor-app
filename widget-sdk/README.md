@@ -33,3 +33,9 @@ error: 'insufficient scope for this resource'
 ```
 
 ![Scopes](https://raw.githubusercontent.com/livechat/sample-apps/master/widget-sdk/scopes.png)
+
+### Instalation
+
+```js
+npm install -save livechat-widget-sdk
+```
