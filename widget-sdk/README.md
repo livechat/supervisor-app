@@ -56,7 +56,7 @@ LiveChat.getAccessToken()
 For getting `access_token` module is using **AccountsSDK**.
 
 You can install this module separetly in 2 ways:
-- Inluding belowe code in your `<head>` tag"
+- Inluding belowe code in your `<head>` tag:
 ```js
   <script src="//cdn.livechatinc.com/accounts/accounts-sdk.min.js"></script>
 ```
