@@ -1,4 +1,5 @@
-﻿# Widget SDK
+﻿
+# Widget SDK
 
 ### Main idea:
 
@@ -65,16 +66,14 @@ You can install this module separetly in 2 ways:
   npm i -s livechat-accounts-sdk
 ```
 
-
-
 ### Available methods
 #### Basic methods
 |Name| Params | Note|
 |---|---|---|
-| init | object: { client_id } | Initialisation method that must be called first. It will let the Agent App know when to hide the spinning loader.|
-| putMessage | string: message| It appends given message at the end of current conversation input window or into ticket window. Agent has to confirm sending this message. |
-| getAccessToken | none | Return promise with `access_token` for current user |
-| openAuthorizationPopup | none | Opens window, where user can log in to LiveChat account. |
+| init() | object: { client_id } | Initialisation method that must be called first. It will let the Agent App know when to hide the spinning loader.|
+| putMessage() | string: message| It appends given message at the end of current conversation input window or into ticket window. Agent has to confirm sending this message. |
+| getAccessToken() | none | Return promise with `access_token` for current user |
+| openAuthorizationPopup() | none | Opens window, where user can log in to LiveChat account. |
 
 #### REST methods
 You can use all REST methods like seen in [docs](https://docs.livechatinc.com/rest-api/).
@@ -98,30 +97,42 @@ LiveChat.getChatsRating(this.state.accessToken, {
 
 |Name| Link |
 |---|---|
-| getAllAgents | https://docs.livechatinc.com/rest-api/#list-all-agents |
-| getSingleAgent | https://docs.livechatinc.com/rest-api/#get-a-single-agent-details |
-| getChats | https://docs.livechatinc.com/rest-api/#get-list-of-chats |
-| getSingleChat | https://docs.livechatinc.com/rest-api/#get-single-chat |
-| getCannedResponses | https://docs.livechatinc.com/rest-api/#list-all-canned-responses |
-| getSingleCannedResponse | https://docs.livechatinc.com/rest-api/#get-a-single-canned-response |
-| getGreetings | https://docs.livechatinc.com/rest-api/#list-all-greetings |
-| getSingleGreeting | https://docs.livechatinc.com/rest-api/#get-a-single-greeting |
-| getAllGroups | https://docs.livechatinc.com/rest-api/#list-all-groups |
-| getSingleGroup | https://docs.livechatinc.com/rest-api/#get-a-single-group-details |
-| getTags | https://docs.livechatinc.com/rest-api/#list-all-tags |
-| getTickets | https://docs.livechatinc.com/rest-api/#get-list-of-tickets |
-| getSingleTicket | https://docs.livechatinc.com/rest-api/#get-single-ticket |
-| getChatsCount | https://docs.livechatinc.com/rest-api/#total-chats |
-| getChatEngagement | https://docs.livechatinc.com/rest-api/#chat-engagement |
-| getChatsRating | https://docs.livechatinc.com/rest-api/#chat-ratings-report |
-| getChatsRanking | https://docs.livechatinc.com/rest-api/#chat-ranking |
-| getQueuedVisitors | https://docs.livechatinc.com/rest-api/#queued-visitors |
-| getQueueWaitingTimes | https://docs.livechatinc.com/rest-api/#queue-waiting-times |
-| getAgentsAvailability | https://docs.livechatinc.com/rest-api/#availability |
-| getAgentChattingTime | https://docs.livechatinc.com/rest-api/#chatting-time |
-| getChatsResponseTime | https://docs.livechatinc.com/rest-api/#chats-response-time |
-| getNewTickets | https://docs.livechatinc.com/rest-api/#new-tickets |
-| getTicketRatingReport | https://docs.livechatinc.com/rest-api/#ticket-ratings-report |
+| getAllAgents() | https://docs.livechatinc.com/rest-api/#list-all-agents |
+| getSingleAgent() | https://docs.livechatinc.com/rest-api/#get-a-single-agent-details |
+|updateAgent()|https://docs.livechatinc.com/rest-api/#update-an-agent
+|deleteAgent()| https://docs.livechatinc.com/rest-api/#remove-an-agent
+| getChats() | https://docs.livechatinc.com/rest-api/#get-list-of-chats |
+| getSingleChat() | https://docs.livechatinc.com/rest-api/#get-single-chat |
+|sendChatTranscriptToEmail()| https://docs.livechatinc.com/rest-api/#send-chat-transcript-to-e-mail
+| getCannedResponses() | https://docs.livechatinc.com/rest-api/#list-all-canned-responses |
+| getSingleCannedResponse() | https://docs.livechatinc.com/rest-api/#get-a-single-canned-response |
+|createCannedResponse()| https://docs.livechatinc.com/rest-api/#create-a-new-canned-response
+|updateCannedResponse()|https://docs.livechatinc.com/rest-api/#update-a-canned-response
+|deleteCannedResponse()|https://docs.livechatinc.com/rest-api/#remove-a-canned-response
+| getGreetings() | https://docs.livechatinc.com/rest-api/#list-all-greetings |
+| getSingleGreeting() | https://docs.livechatinc.com/rest-api/#get-a-single-greeting |
+| getAllGroups() | https://docs.livechatinc.com/rest-api/#list-all-groups |
+| getSingleGroup() | https://docs.livechatinc.com/rest-api/#get-a-single-group-details |
+|createNewGroup()|https://docs.livechatinc.com/rest-api/#create-a-new-group|
+|updateGroup()|https://docs.livechatinc.com/rest-api/#update-a-group|
+|removeGroup()|https://docs.livechatinc.com/rest-api/#remove-a-group|
+| getTags() | https://docs.livechatinc.com/rest-api/#list-all-tags |
+|createTag()|https://docs.livechatinc.com/rest-api/#add-a-tag|
+|deleteTag()| https://docs.livechatinc.com/rest-api/#delete-a-tag|
+| getTickets() | https://docs.livechatinc.com/rest-api/#get-list-of-tickets |
+| getSingleTicket() | https://docs.livechatinc.com/rest-api/#get-single-ticket |
+|createTicket()|https://docs.livechatinc.com/rest-api/#create-a-ticket|
+| getChatsCount() | https://docs.livechatinc.com/rest-api/#total-chats |
+| getChatEngagement() | https://docs.livechatinc.com/rest-api/#chat-engagement |
+| getChatsRating() | https://docs.livechatinc.com/rest-api/#chat-ratings-report |
+| getChatsRanking() | https://docs.livechatinc.com/rest-api/#chat-ranking |
+| getQueuedVisitors() | https://docs.livechatinc.com/rest-api/#queued-visitors |
+| getQueueWaitingTimes() | https://docs.livechatinc.com/rest-api/#queue-waiting-times |
+| getAgentsAvailability() | https://docs.livechatinc.com/rest-api/#availability |
+| getAgentChattingTime() | https://docs.livechatinc.com/rest-api/#chatting-time |
+| getChatsResponseTime() | https://docs.livechatinc.com/rest-api/#chats-response-time |
+| getNewTickets() | https://docs.livechatinc.com/rest-api/#new-tickets |
+| getTicketRatingReport() | https://docs.livechatinc.com/rest-api/#ticket-ratings-report |
 
 
 
@@ -145,4 +156,3 @@ error: 'insufficient scope for this resource'
 ```
 
 ![Scopes](https://raw.githubusercontent.com/livechat/sample-apps/master/widget-sdk/scopes.png)
-
