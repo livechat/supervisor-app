@@ -16,6 +16,23 @@ Supervisor allows you to monitor list of available agents and also show their ba
 ![Alt Text](https://raw.githubusercontent.com/venits/react-native-router-flux/master/supervisor1.png)
 ![Alt Text](https://raw.githubusercontent.com/venits/react-native-router-flux/master/supervisor3.png)
 ![Alt Text](https://raw.githubusercontent.com/venits/react-native-router-flux/master/supervisor2.png)
+
+## How to start?
+
+In order to use this application in your LiveChat dashboard,
+
+first of all you have to create your own app in [Developers Console](https://developers.livechatinc.com/console)
+and get `Client Id`.
+
+To do so:
+1. Go to [apps](https://developers.livechatinc.com/console/apps)
+2. Click **New App** and give it a name.
+3. Go to **Develop** -> **Building Blocks**
+4. Add `Authorizaton` and mark it as **Web App**
+5. Your `Client Id` will be displayed there.
+6. Go to `src/App/Config.js` in your project and replace `app_client_id` with your own `client id`.
+7. That's all. Don't forget to add your app url to **Redirect URI whitelist**
+
 ## How it works?
 
 [Agent App Widgets](https://docs.livechatinc.com/agent-app-widgets/) are web applications loaded inside the LiveChat Agent App. All agents can interact with the widget during chats with customers. The widget itself is displayed in the Agent’s App sidebar as you can see on pictures above.
