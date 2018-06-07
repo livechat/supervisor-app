@@ -22,6 +22,21 @@ In widget you can find statistics about:
 
 ![Alt Text](https://raw.githubusercontent.com/venits/react-native-router-flux/master/progress_photo3.png)
 
+## How to start?
+
+In order to use this application in your LiveChat dashboard,
+
+first of all you have to create your own app in [Developers Console](https://developers.livechatinc.com/console)
+and get `Client Id`.
+
+To do so:
+1. Go to [apps](https://developers.livechatinc.com/console/apps)
+2. Click **New App** and give it a name.
+3. Go to **Develop** -> **Building Blocks**
+4. Add `Authorizaton` and mark it as **Web App**
+5. Your `Client Id` will be displayed there.
+6. Go to `src/App/Config.js` in your project and replace `app_client_id` with your own `client id`.
+7. That's all. Don't forget to add your app url to **Redirect URI whitelist**
 
 ##  How it works?
 
