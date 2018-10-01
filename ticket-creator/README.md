@@ -9,6 +9,7 @@ Before we begin you can find full source code on [GitHub](https://github.com/liv
 **Remember to change `client_id` with id of your widget**.
 
 Our widget will look like this:
+
 ![Preview](https://raw.githubusercontent.com/livechat/sample-apps/master/ticket-creator/clips/peview.png)
 
 ### Creating Widget
@@ -77,7 +78,7 @@ You must put your generated URL from Netlify under ``Widget source URL`` input f
 
 After accepting all changes you should be able to Installation tab and click **Install app** button.
 
-### Congratulations
+### Congratulations!
 Log in to your LiveChat account, open sample chat, find your widget and create some tickets!
 
 
