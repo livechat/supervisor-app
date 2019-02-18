@@ -15,7 +15,7 @@ const LiveChatWebsocket = {
   init: function () {
     this.cfg = {
       apiUrl: "wss://api.livechatinc.com/v3.0/agent/rtm/ws",
-      accessToken: 'Bearer ' + 'dal:w_taNusSQE6E1_fxfp1idQ',
+      accessToken: 'Bearer ' + '',
     };
 
     this.ChatID = null;
