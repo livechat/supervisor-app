@@ -1,6 +1,7 @@
 ### LC3 Bot example
 
-Application can be found here: https://lacy-pixie.glitch.me 
+Source code can be found here: https://glitch.com/edit/#!/lacy-pixie
+Working application can be found here: https://lacy-pixie.glitch.me 
 
 Simple implementation of chat bot with usage of [Configuration Api](https://developers.livechatinc.com/beta-docs/configuration-api) and [Agent Api](https://developers.livechatinc.com/beta-docs/agent-chat-api/).
 
