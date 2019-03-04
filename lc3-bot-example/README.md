@@ -1,5 +1,7 @@
 ### LC3 Bot example
 
+Application can be found here: https://lacy-pixie.glitch.me 
+
 Simple implementation of chat bot with usage of [Configuration Api](https://developers.livechatinc.com/beta-docs/configuration-api) and [Agent Api](https://developers.livechatinc.com/beta-docs/agent-chat-api/).
 
 This application allows to create simple bot for LiveChat license. Bot uses webhooks to listen and respond to requests.
