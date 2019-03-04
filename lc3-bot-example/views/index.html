@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LC3 Bot Example</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+      const clientId = '85b59a376cb6f9ded39c878f1355031e';
+      const serverUrl =
+        "https://us-central1-livechat-experiments.cloudfunctions.net/restApi/proxy-lc3";
+      const restApi =
+        "https://us-central1-livechat-experiments.cloudfunctions.net/restApi/proxy";
+
+      function createBot(token) {
+        const person = prompt("Please enter bot's name", "");
+
+        if (person != null) {
+          window.axios.post(serverUrl + '/configuration/agents/create_bot_agent', {
+            name: person,
+            status: 'accepting chats',
+            groups: [{
+              id: 0,
+              priority: "normal"
+            }],
+            webhooks: {
+              url: "https://lacy-pixie.glitch.me/webhook",
+              secret_key: token,
+              actions: [{
+                name: "incoming_event",
+              }, {
+                name: "incoming_chat_thread",
+              }]
+            }
+          }, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }).then(async function (response) {
+            const botId = response.data.bot_agent_id;
+            await updateBot(botId, token)
+            alert('Bot created successfully');
+            getAllBots(token);
+          })
+            .catch(function (error) {
+              alert('Something went wrong. Check logs.');
+              console.error(error);
+            })
+        } else {
+          alert('Name can not be empty');
+        }
+      }
+      
+      function updateBot(botId, token) {
+         return window.axios.post(serverUrl + '/configuration/agents/update_bot_agent', {
+           id: botId,
+            status: 'accepting chats',
+            groups: [{
+              id: 0,
+              priority: "normal"
+            }],
+              webhooks: {
+                url: "https://lacy-pixie.glitch.me/webhook",
+                secret_key: JSON.stringify({
+                  token: token,
+                  botId,
+                }),
+                actions: [{
+                  name: "incoming_event",
+                }, {
+                  name: "incoming_chat_thread",
+                }]
+              }
+            }, {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            });
+      }
+
+      function deleteBot(token, botId) {
+        return function () {
+          window.axios.post(serverUrl + '/configuration/agents/remove_bot_agent', {
+            "bot_agent_id": botId
+          }, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+            .then(function (res) {
+              alert('Bot deleted successfully');
+              getAllBots(token);
+            })
+            .catch(function (e) {
+              alert('Something went wrong. Check logs.');
+              console.error(e);
+            })
+        };
+      }
+
+      function getAllBots(token) {
+        window.axios.get(restApi + '/agents', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        })
+          .then(function (response) {
+            console.warn(response);
+
+            const bots = response.data.filter(bot => bot.is_bot);
+            const list = document.getElementById('bots');
+            list.innerHTML = 'Number of bots: ' + bots.length || 0;
+
+            bots.forEach(function (bot) {
+              const element = document.createElement('div');
+              element.style = "display: flex; align-items: center; margin: 12px";
+              const avatar = document.createElement('img');
+              avatar.src = 'https://' + bot.avatar;
+              avatar.style = "width: 48px; height: 48px; margin-right: 12px";
+              const name = document.createElement('span');
+              name.style = "font-size: 18px";
+              name.innerText = 'Name: ' + bot.name;
+              name.innerText += '\n Status: ' + bot.status;
+              const deleteButton = document.createElement('button');
+              deleteButton.style = "font-size: 15px; background-color: red; color: white; margin-left: 12px";
+              deleteButton.onclick = deleteBot(token, bot.login);
+              deleteButton.innerText = 'Delete';
+
+              element.appendChild(avatar);
+              element.appendChild(name);
+              element.appendChild(deleteButton);
+
+              list.appendChild(element);
+            });
+          })
+          .catch(function (error) {
+            console.error(error);
+          })
+      }
+
+      function hashStringToJson() {
+        let pieces = window.location.hash.substring(1).split("&"),
+          data = {},
+          i,
+          parts;
+
+        for (i = 0; i < pieces.length; i++) {
+          parts = pieces[i].split("=");
+          if (parts.length < 2) {
+            parts.push("");
+          }
+          data[decodeURIComponent(parts[0])] = decodeURIComponent(parts[1]);
+        }
+        return data;
+      }
+    </script>
+</head>
+<body>
+    <script>
+      const parameters = hashStringToJson();
+
+      if (parameters.access_token) {
+        getAllBots(parameters.access_token)
+      } else if (parameters.error) {
+        console.error(parameters.error)
+      } else {
+        window.location.href = `https://accounts.livechatinc.com/?response_type=token&client_id=${clientId}&redirect_uri=${window.location.href}`;
+      }
+    </script>
+
+    <div>
+        <h3>
+            Sample LC3 Agent Bot
+        </h3>
+        <div id="bots">
+
+        </div>
+        <button onclick="createBot(parameters.access_token)" style="font-size: 16px; margin: 8px">
+            Create Bot
+        </button>
+    </div>
+</body>
+</html>
