@@ -13,13 +13,6 @@ const GlobalStyle = createGlobalStyle`
   ::-webkit-scrollbar {
       display: none;
   }
-
-  body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    overflow-x: hidden;
-  }
 `;
 
 const AppWithAuth = () => {

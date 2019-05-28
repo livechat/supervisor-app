@@ -1,19 +1,13 @@
-![](https://i.ibb.co/J5CxbdT/supervisor-icon.png)
+![](https://i.ibb.co/4mQ3f7G/tag-master-icon.png)
+# Tag Master
 
-# Supervisor
+<!--It's a simple application that shows how to create an Agent App extension with the use of the **LiveChat Rest API**.-->
 
-**Supervisor** is a simple widget helping you monitor the weekly progress of your agents and their availability. With **Supervisor**, you can check the list of available agents. Also, it shows the agents' basic statistics from the last 10 days. 
+**Tag Master** allows you to create, view, and delete [tags](https://www.livechatinc.com/kb/tagging-chats-and-tickets/) and [canned responses](https://www.livechatinc.com/kb/canned-responses/) in an easy and predictable way.
 
-The statistics include the following information:
+# Preview
 
-- **Agent working time** 
-- **Chatting time** 
-- **Agent ratings** 
-
-
-## Preview
-
-![Alt Text](https://i.ibb.co/rfnHsTz/supervisor.png)
+![Alt Text](https://i.ibb.co/f9t4RFW/tagmaster.png)
 
 # App setup
 
@@ -28,7 +22,7 @@ To use this application in your LiveChat dashboard, you'll need to create your o
 3. Select *Agent App Widget* as the **App Template**.
 4. Go to **Develop -> Building Blocks**.
 5. Add **App Authorization** and mark it as *JavaScript App*. Your **Client Id** will be displayed there.
-6. Fetch the **Supoervisor** app repository.
+6. Fetch the **Tag Master** app repository.
 7. In the app directory, do the following steps :
 
     * Install dependencies (`npm install`).
@@ -40,11 +34,13 @@ To use this application in your LiveChat dashboard, you'll need to create your o
     * **Agent App Widgets**
 9. In **Private installation**, click **Install app**. 
 
-You should now be able to use **Supervisor** with LiveChat.
+You should now be able to use **Tag Master** with LiveChat.
+
+
 
 # How it works
 
-[Agent App Widgets](https://docs.livechatinc.com/agent-app-widgets/) are web applications loaded inside the LiveChat Agent App. All agents can interact with the widget during chats with customers. The widget itself is displayed in the Agent’s App sidebar.
+[Agent App Widgets](https://docs.livechatinc.com/agent-app-widgets/) are web applications loaded inside the LiveChat Agent App. All agents can interact with the widget during chats with customers. The widget itself is displayed in the Agent’s App right sidebar.
 
 To get information such as tags and canned responses, you need to use [LiveChat Rest API](https://docs.livechatinc.com/rest-api/).
 
