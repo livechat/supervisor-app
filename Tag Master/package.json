@@ -1,5 +1,5 @@
 {
-  "name": "Supervisor",
+  "name": "sample-apps-2",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -13,7 +13,6 @@
     "react-dom": "^16.8.6",
     "react-loader-spinner": "^2.3.0",
     "react-scripts": "^2.1.8",
-    "recharts": "^1.5.0",
     "styled-components": "^4.2.0"
   },
   "scripts": {

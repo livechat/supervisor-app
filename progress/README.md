@@ -1,52 +1,66 @@
-﻿#  Progress
+![](https://i.ibb.co/Ks6jZc1/progress-icon.png)
 
-Simple application that shows how to create Agent App Extension with use of LiveChat Rest Api.
+# Progress
 
-Progress is a sample app that creates reports based on data from chats.
+**Progress** is a simple app that creates reports based on data from chats. It can display the daily, weekly, monthly, and annual statistics.
 
-In widget you can find statistics about:
+It shows the following information:
 
-- **Ratings** ( per day, week, month, quarter, year)
-- **Chatting times**  ( per day, week, month, quarter, year)
-- [Response Time](https://docs.livechatinc.com/rest-api/#chats-first-response-time)  ( per day, week, month, quarter, year)
+- **Ratings**
+- **Chatting time**
+- [Response Time](https://docs.livechatinc.com/rest-api/#chats-first-response-time)
 
+# Preview
 
-##  Preview
+![Alt Text](https://i.ibb.co/k6XdhJ9/progress.png)
 
+# App setup
 
-![Alt Text](https://raw.githubusercontent.com/venits/react-native-router-flux/master/progress_photo1.png)
+## Before you start
 
+To use this application in your LiveChat dashboard, you'll need to create your own app in [Developers Console](https://developers.livechatinc.com/console) and get your **Client Id**.
 
-![Alt Text](https://raw.githubusercontent.com/venits/react-native-router-flux/master/progress_photo2.png)
+## Getting started
 
+1. Go to [Apps](https://developers.livechatinc.com/console/apps) in [Developers Console](https://developers.livechatinc.com/console).
+2. Click **New App** and give it an **App Name**.
+3. Select _Agent App Widget_ as the **App Template**.
+4. Go to **Develop -> Building Blocks**.
+5. Add **App Authorization** and mark it as _JavaScript App_. Your **Client Id** will be displayed there.
+6. Fetch the **Progress** app repository.
+7. In the app directory, do the following steps :
 
-![Alt Text](https://raw.githubusercontent.com/venits/react-native-router-flux/master/progress_photo3.png)
+   - Install dependencies (`npm install`).
+   - In your project, go to `src/utils/congif.js` and replace `client_id` with your own **Client Id** (the one from **Step 5**).
+   - Run your app (`npm start`).
 
-## How to start?
+8. Add your app url (for example: `https://localhost:3000`) in these two locations:
 
-In order to use this application in your LiveChat dashboard,
+   - **Redirect URI whitelist**
+   - **Agent App Widgets**
 
-first of all you have to create your own app in [Developers Console](https://developers.livechatinc.com/console)
-and get `Client Id`.
+9. In **Private installation**, click **Install app**.
 
-To do so:
-1. Go to [apps](https://developers.livechatinc.com/console/apps)
-2. Click **New App** and give it a name.
-3. Go to **Develop** -> **Building Blocks**
-4. Add `Authorizaton` and mark it as **Web App**
-5. Your `Client Id` will be displayed there.
-6. Go to `src/App/Config.js` in your project and replace `app_client_id` with your own `client id`.
-7. That's all. Don't forget to add your app url to **Redirect URI whitelist**
+You should now be able to use **Progress** with LiveChat.
 
-##  How it works?
+# How it works
 
-[Agent App Widgets](https://docs.livechatinc.com/agent-app-widgets/) are web applications loaded inside the LiveChat Agent App. All agents can interact with the widget during chats with customers. The widget itself is displayed in the Agent’s App sidebar as you can see on pictures above.
+[Agent App Widgets](https://docs.livechatinc.com/agent-app-widgets/) are web applications loaded inside the LiveChat Agent App. All agents can interact with the widget during chats with customers. The widget itself is displayed in the Agent’s App right sidebar.
 
-To get information like tags and canned responses we need to use [LiveChat Rest Api](https://docs.livechatinc.com/rest-api/).
+To get information such as tags and canned responses, you need to use [LiveChat Rest API](https://docs.livechatinc.com/rest-api/).
 
-Rest Api requires you to include **access_token** in all requests in order to get information from our server. You can get it using [LiveChat Boilerplate](https://docs.livechatinc.com/boilerplate/) and [JavaScript Widget API](https://docs.livechatinc.com/agent-app-widgets/#javascript-api).
-
+In order to pull data from our server, Rest API requires you to include an **access_token** in all the requests. You can get it using [LiveChat Boilerplate](https://docs.livechatinc.com/boilerplate/) and [JavaScript Widget API](https://docs.livechatinc.com/agent-app-widgets/#javascript-api).
 
 You should also get familiar with [Authorization](https://docs.livechatinc.com/authorization/).
 
-If you found any bugs, please create issue in this repo and I will try to fix is ASAP ;)
+# Feedback
+
+If you find some bugs, please create an issue in this repo. We will try to fix is ASAP ;)
+
+# If you're new to LiveChat
+
+**LiveChat** is an online customer service software with live support, help desk software, and web analytics capabilities. It's used by more than 27,000 companies all over the world. For more info, check out [LiveChat for Developers](https://developers.livechatinc.com/).
+
+---
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
