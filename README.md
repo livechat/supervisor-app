@@ -4,9 +4,9 @@ Sample apps will help you get familliar with the [LiveChat Rest API]((https://do
 
 The current list of samples apps:
 
-- [Tag Master](https://github.com/livechat/sample-apps-2/tree/master/Tag%20Master) - widget for helping your agents manage tags and canned responses.
-- [Progress](https://github.com/livechat/sample-apps-2/tree/master/Progress) - widget for helping you monitor statistics of your team, such as chat ratings, response times, and chatting times.
-- [Supervisor](https://github.com/livechat/sample-apps-2/tree/master/Supervisor) - widget for helping you monitor weekly progress of your agents and also their availability.
+- [Tag Master](https://github.com/livechat/sample-apps/tree/master/Tag%20Master) - widget for helping your agents manage tags and canned responses.
+- [Progress](https://github.com/livechat/sample-apps/tree/master/progress) - widget for helping you monitor statistics of your team, such as chat ratings, response times, and chatting times.
+- [Supervisor](https://github.com/livechat/sample-apps/tree/master/supervisor) - widget for helping you monitor weekly progress of your agents and also their availability.
 
 In the source code, you can find the code for **Authorization** and **data fetching** from our server.
 
