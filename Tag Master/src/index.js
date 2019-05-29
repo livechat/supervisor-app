@@ -15,11 +15,11 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const AppWithAuth = () => {
+const useLiveChat = ({ client_id, account_url }) => {
   const [accessToken, setAccessToken] = useState(null);
   LiveChat.init({ authorize: false });
+
   useEffect(() => {
-    const { client_id, account_url } = config;
     accountsSdk.init({
       client_id,
       onIdentityFetched: (error, data) => {
@@ -33,6 +33,12 @@ const AppWithAuth = () => {
       }
     });
   });
+
+  return [accessToken];
+};
+
+const AppWithAuth = () => {
+  const [accessToken] = useLiveChat(config);
 
   if (!accessToken) {
     return <Spinner marginTop="calc(100% - 50px)" />;
