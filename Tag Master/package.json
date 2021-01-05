@@ -7,7 +7,7 @@
     "@livechat/agent-app-widget-sdk": "^1.3.0",
     "@livechat/design-system": "^0.1.3",
     "@material-ui/core": "^3.9.3",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "material-icons-react": "^1.0.4",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
