@@ -22,17 +22,18 @@ To use this application in your LiveChat dashboard, you'll need to create your o
 3. Select *Agent App Widget* as the **App Template**.
 4. Go to **Develop -> Building Blocks**.
 5. Add **App Authorization** and mark it as *JavaScript App*. Your **Client Id** will be displayed there.
-6. Fetch the **Tag Master** app repository.
-7. In the app directory, do the following steps :
+6. Add scopes `canned_responses_read`, `canned_responses_write`, `tags--all:rw`, `tags--groups:rw` to the **App scopes and API access** box.
+7. Fetch the **Tag Master** app repository.
+8. In the app directory, do the following steps :
 
     * Install dependencies (`npm install`).
     * In your project, go to `src/utils/congif.js` and replace `client_id` with your own **Client Id** (the one from **Step 5**).
     * Run your app (`npm start`).
-8. Add your app url (for example: `https://localhost:3000`) in these two locations:
+9. Add your app url (for example: `https://localhost:3000`) in these two locations:
 
     * **Redirect URI whitelist**
     * **Agent App Widgets**
-9. In **Private installation**, click **Install app**. 
+10. In **Private installation**, click **Install app**. 
 
 You should now be able to use **Tag Master** with LiveChat.
 
