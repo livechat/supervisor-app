@@ -27,19 +27,20 @@ To use this application in your LiveChat dashboard, you'll need to create your o
 3. Select _Agent App Widget_ as the **App Template**.
 4. Go to **Develop -> Building Blocks**.
 5. Add **App Authorization** and mark it as _JavaScript App_. Your **Client Id** will be displayed there.
-6. Fetch the **Progress** app repository.
-7. In the app directory, do the following steps :
+6. Add `reports_read` scope to the **App scopes and API access** box.
+7. Fetch the **Progress** app repository.
+8. In the app directory, do the following steps :
 
    - Install dependencies (`npm install`).
    - In your project, go to `src/utils/congif.js` and replace `client_id` with your own **Client Id** (the one from **Step 5**).
    - Run your app (`npm start`).
 
-8. Add your app url (for example: `https://localhost:3000`) in these two locations:
+9. Add your app url (for example: `https://localhost:3000`) in these two locations:
 
    - **Redirect URI whitelist**
    - **Agent App Widgets**
 
-9. In **Private installation**, click **Install app**.
+10. In **Private installation**, click **Install app**.
 
 You should now be able to use **Progress** with LiveChat.
 
@@ -47,9 +48,9 @@ You should now be able to use **Progress** with LiveChat.
 
 [Agent App Widgets](https://docs.livechatinc.com/agent-app-widgets/) are web applications loaded inside the LiveChat Agent App. All agents can interact with the widget during chats with customers. The widget itself is displayed in the Agent’s App right sidebar.
 
-To get information such as tags and canned responses, you need to use [LiveChat Rest API](https://docs.livechatinc.com/rest-api/).
+To get information such as **chat ratings** and **chat response time**, you need to use [Reports API](https://developers.livechat.com/docs/data-reporting/reports-api).
 
-In order to pull data from our server, Rest API requires you to include an **access_token** in all the requests. You can get it using [LiveChat Boilerplate](https://docs.livechatinc.com/boilerplate/) and [JavaScript Widget API](https://docs.livechatinc.com/agent-app-widgets/#javascript-api).
+In order to pull data from our server, Rest API requires you to include an **access_token** in all the requests. You can get it using [Personal Access Tokens](https://developers.livechat.com/docs/authorization/agent-authorization#personal-access-tokens) and [JavaScript Widget API](https://docs.livechatinc.com/agent-app-widgets/#javascript-api).
 
 You should also get familiar with [Authorization](https://docs.livechatinc.com/authorization/).
 
