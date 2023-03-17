@@ -52,7 +52,7 @@ In order to pull data from our server, you need to include an **access_token** i
 
 
 # More sample apps 
-Experiment more with two different sample apps:
+Experiment more with our different sample apps:
  - [Tag Master](https://github.com/livechat/tag-master) - widget for helping your agents manage tags and canned responses.
  - [Progress](https://github.com/livechat/progress-app) - widget for helping you monitor statistics of your team, such as chat ratings, response times, and chatting times.
  - [Sample auth app with the redirect flow](https://github.com/livechat/sample-app-redirect-auth)
