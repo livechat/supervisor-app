@@ -46,23 +46,24 @@ You should now be able to use **Supervisor** with LiveChat.
 
 [Agent App Widgets](https://developers.livechat.com/docs/extending-agent-app) are web applications loaded inside the LiveChat Agent App. All agents can interact with the widget during chats with customers. The widget itself is displayed in the Agent’s App sidebar.
 
-To get information such as tags and canned responses, you need to use [LiveChat Rest API](https://developers.livechat.com/docs/management/configuration-api/v2.0/).
+To get information such as tags, you need to use [Configuration API](https://developers.livechat.com/docs/management/configuration-api).
 
-In order to pull data from our server, Rest API requires you to include an **access_token** in all the requests. You can get it using [Personal Access Tokens](https://developers.livechat.com/docs/authorization/agent-authorization#personal-access-tokens) and [JavaScript Widget API](https://docs.livechatinc.com/agent-app-widgets/#javascript-api).
+In order to pull data from our server, you need to include an **access_token** in all the requests. You can get it using one of the [agent authorization flows](https://developers.livechat.com/docs/authorization/agent-authorization).
 
-You should also get familiar with [Authorization](https://docs.livechatinc.com/authorization/).
 
 # More sample apps 
 Experiment more with two different sample apps:
  - [Tag Master](https://github.com/livechat/tag-master) - widget for helping your agents manage tags and canned responses.
  - [Progress](https://github.com/livechat/progress-app) - widget for helping you monitor statistics of your team, such as chat ratings, response times, and chatting times.
+- [Sample auth app with the redirect flow](https://github.com/livechat/sample-app-redirect-auth)
+- [Sample authapp with the popup flow](https://github.com/livechat/sample-app-popup-auth)
 
 # Feedback
 If you find some bugs, please create an issue in this repo. We will try to fix it ASAP ;)
 
 # If you're new to LiveChat
 
-**LiveChat** is an online customer service software with live support, help desk software, and web analytics capabilities. It's used by more than 37,000 companies all over the world. For more info, check out [LiveChat for Developers](https://developers.livechatinc.com/).
+**LiveChat** is an online customer service software with live support, help desk software, and web analytics capabilities. It's used by more than 37,000 companies all over the world. Read more about [LiveChat for Developers](https://developers.livechatinc.com/) and [join our Discord](https://discord.com/invite/NcfJu3a9kM) to learn, get inspired, and meet other developers.
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
