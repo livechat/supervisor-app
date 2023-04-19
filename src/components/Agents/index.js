@@ -25,7 +25,7 @@ const ToastStyle = `
   }
 `;
 
-const AvaratStyle = status => `
+const AvaratStyle = (status) => `
   grid-area: avatar;
   width: 30px;
   border-radius: 20px;
@@ -82,6 +82,7 @@ export default ({ agents = [], tabId, searching, accessToken }) => {
           <img
             src={avatar.includes("https") ? avatar : `https://${avatar}`}
             css={AvaratStyle(status)}
+            alt="avatar"
           />
           <span css={NameStyle}>{name}</span>
           <span css={InfoButtonStyle}>

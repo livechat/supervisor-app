@@ -1,13 +1,11 @@
 import React, { useState, useEffect, Fragment } from "react";
 import ReactDOM from "react-dom";
 import { createGlobalStyle } from "styled-components";
-
-import { accountsSdk } from "@livechat/accounts-sdk";
-import LiveChat from "@livechat/agent-app-widget-sdk";
-import "@livechat/design-system/dist/design-system.css";
+import AccountsSDK from "@livechat/accounts-sdk";
 import config from "./utils/config";
 import App from "./components";
 import Spinner from "./components/Spinner";
+import "@livechat/design-system/dist/design-system.css";
 
 const GlobalStyle = createGlobalStyle`
   ::-webkit-scrollbar {
@@ -24,22 +22,26 @@ const GlobalStyle = createGlobalStyle`
 
 const useLiveChat = ({ client_id, account_url }) => {
   const [accessToken, setAccessToken] = useState(null);
-  LiveChat.init({ authorize: false });
+
+  const accountsSDK = new AccountsSDK({
+    client_id: client_id,
+    server_url: account_url,
+  });
 
   useEffect(() => {
-    accountsSdk.init({
-      client_id,
-      onIdentityFetched: (error, data) => {
-        if (data && data.access_token) {
-          setAccessToken(data.access_token);
-        } else {
-          window.location.href = `${account_url}?response_type=token&client_id=${client_id}&redirect_uri=${
-            window.location.href
-          }`;
-        }
+    const authorize = async () => {
+      try {
+        const authorizeData = await accountsSDK.redirect().authorizeData();
+
+        accountsSDK.verify(authorizeData);
+        const { access_token } = authorizeData;
+        setAccessToken(access_token);
+      } catch (error) {
+        await accountsSDK.redirect().authorize();
       }
-    });
-  });
+    };
+    authorize();
+  }, []);
 
   return [accessToken];
 };

@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {
-  Button,
-  Tooltip,
-  TooltipContent,
-  ModalBase
-} from "@livechat/design-system";
+import { Button, ModalBase } from "@livechat/design-system";
 import MaterialIcon from "material-icons-react";
 import RatioModal from "./RatioModal";
 import ChatingModal from "./ChatingModal";
 import WorkingModal from "./WorkingModal";
-import "styled-components/macro";
 import api from "../../utils/api";
+import "styled-components/macro";
 
 const containerStyle = `
   width: calc(100% - 20px);
@@ -30,7 +25,7 @@ const containerStyle = `
   color: hsl(0, 0%, 45%);
 `;
 
-const rowStyle = area => `
+const rowStyle = (area) => `
   grid-area: ${area};
   display: flex;
   align-items: center;
@@ -42,20 +37,20 @@ const rowStyle = area => `
   }
 `;
 
-const buttonStyle = area => `
+const buttonStyle = (area) => `
   grid-area: ${area};
   height: 30px;
   width: 80px;
 `;
 
-const lineStyle = area => `
+const lineStyle = (area) => `
   grid-area: ${area}; 
   height: 1px;
   width: 100%;
   background-color: hsl(0, 0%, 90%);
 `;
 
-const spaceStyle = area => `
+const spaceStyle = (area) => `
   grid-area: ${area};
 `;
 
@@ -68,20 +63,20 @@ export default ({ login, permission, status, name, accessToken }) => {
   const fetchAgentRatings = () =>
     api
       .fetchAgentRatings(login, accessToken)
-      .then(response => setAgentRatings(response.data))
-      .catch(error => console.log(error));
+      .then((response) => setAgentRatings(response.data))
+      .catch((error) => console.log(error));
 
   const fetchAgentAvailability = () =>
     api
       .fetchAgentAvailability(login, accessToken)
-      .then(response => setAgentAvailability(response.data))
-      .catch(error => console.log(error));
+      .then((response) => setAgentAvailability(response.data))
+      .catch((error) => console.log(error));
 
   const fetchChattingTime = () =>
     api
       .fetchChattingTime(login, accessToken)
-      .then(response => setAgentChattingTime(response.data))
-      .catch(error => console.log(error));
+      .then((response) => setAgentChattingTime(response.data))
+      .catch((error) => console.log(error));
 
   useEffect(() => {
     fetchAgentRatings();
@@ -89,13 +84,13 @@ export default ({ login, permission, status, name, accessToken }) => {
     fetchChattingTime();
   }, []);
 
-  const handleModal = i => {
+  const handleModal = (i) => {
     const newModals = [...modals];
     newModals[i] = !modals[i];
     setModals(newModals);
   };
 
-  const renderChart = type => {
+  const renderChart = (type) => {
     switch (type) {
       case "Working":
         return <WorkingModal data={agentAvailability} />;
@@ -103,6 +98,8 @@ export default ({ login, permission, status, name, accessToken }) => {
         return <ChatingModal data={agentChattingTime} />;
       case "Ratio":
         return <RatioModal data={agentRatings} />;
+      default:
+        console.error(`Unexpected type: ${type}`);
     }
   };
 
