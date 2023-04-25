@@ -65,10 +65,15 @@ const App = ({ accessToken }) => {
   const [tabId, setTabId] = useState("All");
   const [agents, setAgents] = useState([]);
   const [searchValue, setSearchValue] = useState("");
-  const [searching, setSearching] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const fetchAgents = () =>
-    api.fetchAgents(accessToken).then((response) => setAgents(response.data));
+  const fetchAgents = () => {
+    setLoading(true);
+    api
+      .fetchAgents(accessToken)
+      .then((response) => setAgents(response.data))
+      .finally(() => setLoading(false));
+  };
 
   useInterval(() => {
     fetchAgents();
@@ -78,17 +83,16 @@ const App = ({ accessToken }) => {
     fetchAgents();
   }, []);
 
-  useEffect(() => {
-    setSearching(searchValue ? true : false);
-  }, [searchValue]);
-
   const renderTabs = () =>
     tabs.map((tab) => {
       const { title, icon } = tab;
       return (
         <Tab
           key={title}
-          onSelect={() => setTabId(title)}
+          onSelect={() => {
+            setTabId(title);
+            fetchAgents();
+          }}
           isSelected={title === tabId}
         >
           <div css={tabStyle}>
@@ -141,7 +145,7 @@ const App = ({ accessToken }) => {
       <Agents
         agents={filteredAgents}
         tabId={tabId}
-        searching={searching}
+        loading={loading}
         accessToken={accessToken}
       />
     </div>

@@ -51,12 +51,12 @@ const noResultsStyle = `
   margin: auto;
 `;
 
-export default ({ agents = [], tabId, searching, accessToken }) => {
-  if (agents.length <= 0 && !searching) {
+export default ({ agents = [], tabId, loading, accessToken }) => {
+  if (loading) {
     return <Spinner marginTop="calc(100% - 120px)" />;
   }
 
-  if (agents.length <= 0 && searching) {
+  if (agents.length <= 0) {
     return <div css={noResultsStyle}>No results</div>;
   }
 
