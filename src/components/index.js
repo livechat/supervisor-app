@@ -3,7 +3,7 @@ import {
   TabsWrapper,
   TabsList,
   Tab,
-  InputField
+  InputField,
 } from "@livechat/design-system";
 import "styled-components/macro";
 import MaterialIcon from "material-icons-react";
@@ -40,7 +40,7 @@ const labelStyle = `
 const tabs = [
   { title: "All", icon: "supervised_user_circle" },
   { title: "Online", icon: "fiber_manual_record" },
-  { title: "Offline", icon: "not_interested" }
+  { title: "Offline", icon: "not_interested" },
 ];
 
 const useInterval = (callback, delay) => {
@@ -65,10 +65,15 @@ const App = ({ accessToken }) => {
   const [tabId, setTabId] = useState("All");
   const [agents, setAgents] = useState([]);
   const [searchValue, setSearchValue] = useState("");
-  const [searching, setSearching] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const fetchAgents = () =>
-    api.fetchAgents(accessToken).then(response => setAgents(response.data));
+  const fetchAgents = () => {
+    setLoading(true);
+    api
+      .fetchAgents(accessToken)
+      .then((response) => setAgents(response.data))
+      .finally(() => setLoading(false));
+  };
 
   useInterval(() => {
     fetchAgents();
@@ -78,18 +83,16 @@ const App = ({ accessToken }) => {
     fetchAgents();
   }, []);
 
-  useEffect(() => {
-    setSearching(searchValue ? true : false);
-  }, [searchValue]);
-
   const renderTabs = () =>
-    tabs.map((tab, i) => {
+    tabs.map((tab) => {
       const { title, icon } = tab;
       return (
         <Tab
-          key={i}
-          onSelect={() => setTabId(title)}
           key={title}
+          onSelect={() => {
+            setTabId(title);
+            fetchAgents();
+          }}
           isSelected={title === tabId}
         >
           <div css={tabStyle}>
@@ -109,15 +112,17 @@ const App = ({ accessToken }) => {
       filteredAgents = agents;
       break;
     case "Online":
-      filteredAgents = agents.filter(e => e.status === "accepting chats");
+      filteredAgents = agents.filter((e) => e.status === "accepting chats");
       break;
     case "Offline":
-      filteredAgents = agents.filter(e => e.status !== "accepting chats");
+      filteredAgents = agents.filter((e) => e.status !== "accepting chats");
       break;
+    default:
+      console.error(`Unexpected tabId: ${tabId}`);
   }
 
   if (searchValue) {
-    filteredAgents = filteredAgents.filter(e =>
+    filteredAgents = filteredAgents.filter((e) =>
       e.name.toLowerCase().includes(searchValue.toLowerCase())
     );
   }
@@ -134,13 +139,13 @@ const App = ({ accessToken }) => {
         value={searchValue}
         placeholder="Search.."
         type="text"
-        onChange={e => setSearchValue(e.target.value)}
+        onChange={(e) => setSearchValue(e.target.value)}
         style={{ width: "100%", borderColor: "hsl(0, 0%, 85%)" }}
       />
       <Agents
         agents={filteredAgents}
         tabId={tabId}
-        searching={searching}
+        loading={loading}
         accessToken={accessToken}
       />
     </div>
