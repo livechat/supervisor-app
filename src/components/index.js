@@ -7,9 +7,8 @@ import {
 } from "@livechat/design-system";
 import "styled-components/macro";
 import MaterialIcon from "material-icons-react";
-
 import api from "../utils/api";
-import Agents from "./Agents/index";
+import AgentList from "./Agents/AgentsList";
 
 const mainConatinerStyle = `
   margin-left: auto;
@@ -142,9 +141,8 @@ const App = ({ accessToken }) => {
         onChange={(e) => setSearchValue(e.target.value)}
         style={{ width: "100%", borderColor: "hsl(0, 0%, 85%)" }}
       />
-      <Agents
+      <AgentList
         agents={filteredAgents}
-        tabId={tabId}
         loading={loading}
         accessToken={accessToken}
       />

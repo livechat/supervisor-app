@@ -1,156 +1,98 @@
-import React, { useState, useEffect } from "react";
-import { Button, ModalBase } from "@livechat/design-system";
+import React, { useState } from "react";
+import { Toast } from "@livechat/design-system";
 import MaterialIcon from "material-icons-react";
-import RatioModal from "./RatioModal";
-import ChatingModal from "./ChatingModal";
-import WorkingModal from "./WorkingModal";
-import api from "../../utils/api";
+import AgentDetails from "./AgentDetails";
 import "styled-components/macro";
 
-const containerStyle = `
-  width: calc(100% - 20px);
-  height: auto;
-  background-color: white;
-  box-shadow: 0 6px 30px -10px rgba(0,0,0,.3);
-  display: grid;
-  grid-template: "login login login " 30px
-                 "line1 line1 line1" 1px 
-                 "perm perm perm" 30px 
-                 "line2 line2 line2" 1px 
-                 "status status status" 30px 
-                 "space space space" 20px 
-                 "btn1 btn2 btn3" 45px;
-  grid-gap: 5px;
-  padding: 20px 10px;
-  color: hsl(0, 0%, 45%);
-`;
-
-const rowStyle = (area) => `
-  grid-area: ${area};
-  display: flex;
-  align-items: center;
-  padding-left: 5px;
-
-  > span {
-    margin-left: 10px;
-    font-size: 14px;
+const WrapperStyle = `
+  .lc-toast {
+    width: 100%;
+    box-shadow: none;
+    border: 1px solid #E4E8EC;
   }
 `;
 
-const buttonStyle = (area) => `
-  grid-area: ${area};
-  height: 30px;
-  width: 80px;
+const ToastStyle = `
+  cursor: pointer;
+  .lc-toast__content {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-gap: 20px;
+    grid-template: "avatar name info" / 25px auto 40px;
+    align-items: center;
+  }
+  .lc-toast__icon {
+    display: none;
+  }
+
+  :hover {
+    background-color: hsl(0, 0%, 97%);
+  }
 `;
 
-const lineStyle = (area) => `
-  grid-area: ${area}; 
-  height: 1px;
-  width: 100%;
-  background-color: hsl(0, 0%, 90%);
-`;
-
-const spaceStyle = (area) => `
-  grid-area: ${area};
-`;
-
-export default ({ login, permission, status, name, accessToken }) => {
-  const [modals, setModals] = useState([false, false, false]);
-  const [agentRatings, setAgentRatings] = useState({});
-  const [agentAvailability, setAgentAvailability] = useState({});
-  const [agentChattingTime, setAgentChattingTime] = useState({});
-
-  const fetchAgentRatings = () =>
-    api
-      .fetchAgentRatings(login, accessToken)
-      .then((response) => setAgentRatings(response.data))
-      .catch((error) => console.log(error));
-
-  const fetchAgentAvailability = () =>
-    api
-      .fetchAgentAvailability(login, accessToken)
-      .then((response) => setAgentAvailability(response.data))
-      .catch((error) => console.log(error));
-
-  const fetchChattingTime = () =>
-    api
-      .fetchChattingTime(login, accessToken)
-      .then((response) => setAgentChattingTime(response.data))
-      .catch((error) => console.log(error));
-
-  useEffect(() => {
-    fetchAgentRatings();
-    fetchAgentAvailability();
-    fetchChattingTime();
-  }, []);
-
-  const handleModal = (i) => {
-    const newModals = [...modals];
-    newModals[i] = !modals[i];
-    setModals(newModals);
+const AvaratStyle = (status) => `
+  grid-area: avatar;
+  width: 30px;
+  border-radius: 20px;
+  border: ${
+    status === "accepting chats"
+      ? "solid #4bb678 2px"
+      : "solid hsl(0, 0%, 85%) 2px"
   };
+`;
 
-  const renderChart = (type) => {
-    switch (type) {
-      case "Working":
-        return <WorkingModal data={agentAvailability} />;
-      case "Chating":
-        return <ChatingModal data={agentChattingTime} />;
-      case "Ratio":
-        return <RatioModal data={agentRatings} />;
-      default:
-        console.error(`Unexpected type: ${type}`);
-    }
-  };
+const NameStyle = `
+  grid-area: name;
+  font-size: 16px;
+`;
+
+const ArrowStyle = `
+  grid-area: info;
+  justify-self: end;
+  width: 20px;
+  margin-right: 10px;
+`;
+
+const Agent = ({ agentData = [], accessToken }) => {
+  const [showDetails, setShowDetails] = useState(false);
+  const { avatar, name, status, login, permission } = agentData;
 
   return (
-    <div css={containerStyle}>
-      <span css={rowStyle("login")}>
-        <MaterialIcon icon="account_circle" />
-        <span>{login}</span>
-      </span>
-      <div css={lineStyle("line1")} />
-      <span css={rowStyle("perm")}>
-        <MaterialIcon icon="vpn_key" />
-        <span>{permission}</span>
-      </span>
-      <div css={lineStyle("line2")} />
-      <span css={rowStyle("status")}>
-        {status === "accepting chats" ? (
-          <MaterialIcon icon="fiber_manual_record" color="#4bb678" />
-        ) : (
-          <MaterialIcon
-            icon="fiber_manual_record"
-            color="rgba(0, 0, 0, 0.54)"
-          />
-        )}
-        <span>{status}</span>
-      </span>
-
-      <div css={spaceStyle("space")} />
-      {["Working", "Chating", "Ratio"].map((e, i) => {
-        return (
-          <div
-            key={i}
-            css={`
-              display: flex;
-              justify-content: center;
-            `}
-          >
-            <Button css={buttonStyle("btn1")} onClick={() => handleModal(i)}>
-              {e}
-            </Button>
-            {modals[i] && (
-              <ModalBase
-                onClose={() => handleModal(i)}
-                style={{ width: "600px", height: "450px" }}
-              >
-                <div style={{ margin: "auto" }}>{renderChart(e, name)}</div>
-              </ModalBase>
-            )}
-          </div>
-        );
-      })}
+    <div css={WrapperStyle}>
+      <Toast
+        css={ToastStyle}
+        onClick={() => {
+          setShowDetails(!showDetails);
+        }}
+      >
+        <img
+          src={avatar.includes("https") ? avatar : `https://${avatar}`}
+          css={AvaratStyle(status)}
+          alt="avatar"
+        />
+        <span css={NameStyle}>{name}</span>
+        <span css={ArrowStyle}>
+          {showDetails ? (
+            <span>
+              <MaterialIcon icon="expand_more" color="#424D57" />
+            </span>
+          ) : (
+            <MaterialIcon icon="chevron_right" color="#424D57" />
+          )}
+        </span>
+      </Toast>
+      {showDetails && (
+        <AgentDetails
+          login={login}
+          permission={permission}
+          status={status}
+          name={name}
+          accessToken={accessToken}
+        />
+      )}
     </div>
   );
 };
+
+export default Agent;
